@@ -1,0 +1,9 @@
+<svg width="900" height="600" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="900" height="600" rx="34" fill="#f4f1eb"/>
+    <rect x="70" y="80" width="760" height="420" rx="28" fill="#fff" stroke="#d9e1ea"/>
+    <circle cx="610" cy="298" r="122" fill="#111827" opacity=".92"/>
+    <circle cx="610" cy="298" r="72" fill="#f7f9fc"/>
+    <circle cx="610" cy="298" r="28" fill="#111827"/>
+    <path d="M184 220h280M184 270h230M184 320h310M184 370h190" stroke="#c7d0dd" stroke-width="18" stroke-linecap="round"/>
+    <text x="184" y="460" font-family="Arial" font-size="28" font-weight="900" fill="#111827">Quality control</text>
+    </svg>

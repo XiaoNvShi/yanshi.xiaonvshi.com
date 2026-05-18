@@ -1,0 +1,15 @@
+<svg width="186" height="54" viewBox="0 0 186 54" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARC Hub Factory">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="186" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="0.55" stop-color="#303946"/>
+      <stop offset="1" stop-color="#0b1220"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(2 5) skewX(-16)">
+    <path d="M11 9h60c8.8 0 15.2-3.4 21-8.4H42c-11 0-20.8 3-31 8.4Z" fill="url(#lg)"/>
+    <path d="M0 24h66c8 0 15.5-3.7 23.5-9.4H31C20 14.6 9.5 18.2 0 24Z" fill="url(#lg)" opacity=".92"/>
+    <path d="M13 39h51c10 0 18-3.2 27-9.2H36C27 29.8 19.4 32.8 13 39Z" fill="url(#lg)" opacity=".84"/>
+  </g>
+  <text x="102" y="39" font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="900" letter-spacing="7" fill="url(#lg)">ARC</text>
+</svg>

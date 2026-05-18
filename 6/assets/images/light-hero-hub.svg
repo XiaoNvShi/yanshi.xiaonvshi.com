@@ -1,0 +1,18 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#f6f8fb"/>
+  <circle cx="810" cy="360" r="260" fill="#edf2f7"/>
+  <circle cx="810" cy="360" r="190" stroke="#d7dee8" stroke-width="1" stroke-dasharray="12 14"/>
+  <circle cx="810" cy="360" r="118" fill="#ffffff" stroke="#dbe2ea" stroke-width="2"/>
+  <circle cx="810" cy="360" r="74" fill="#e9eef5" stroke="#c9d2de"/>
+  <circle cx="810" cy="360" r="35" fill="#111827"/>
+  <path d="M550 342h150c28 0 58-23 78-50h-126c-50 0-78 13-102 50Z" fill="#28313d"/>
+  <path d="M518 391h205c34 0 66-22 96-57H627c-44 0-78 17-109 57Z" fill="#111827"/>
+  <path d="M560 443h155c34 0 65-17 92-46H625c-31 0-50 16-65 46Z" fill="#536170"/>
+  <path d="M875 300h146c36 0 62 24 62 60s-26 60-62 60H875c32-27 48-46 48-60s-16-33-48-60Z" fill="#202936"/>
+  <path d="M714 247l-83-87M862 230l32-121M967 286l116-65M1010 410l126 40M899 489l74 106M752 492l-41 121M644 411l-126 40M650 292l-114-62" stroke="#d5dde8" stroke-width="4" stroke-linecap="round"/>
+  <g opacity=".5" fill="#b8c2cf">
+    <circle cx="631" cy="160" r="8"/><circle cx="894" cy="109" r="8"/><circle cx="1083" cy="221" r="8"/><circle cx="1136" cy="450" r="8"/><circle cx="973" cy="595" r="8"/><circle cx="711" cy="613" r="8"/><circle cx="518" cy="451" r="8"/><circle cx="536" cy="230" r="8"/>
+  </g>
+  <rect x="90" y="86" width="330" height="72" rx="36" fill="#fff" stroke="#dce3ec"/>
+  <text x="126" y="130" font-family="Arial" font-size="18" font-weight="700" fill="#111827" letter-spacing="3">OEM / ODM HUB SYSTEMS</text>
+</svg>
