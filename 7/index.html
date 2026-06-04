@@ -1,0 +1,1316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ARC Bike Hub — Outdoor Performance Hub Systems</title>
+  <meta name="description" content="ARC Bike Hub concept homepage with outdoor riding scenes, mountain road photography, hub close-ups, wheel system features, technical support and partner inquiry." />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1633707167344-503c1c751027?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=3000">
+  <style>
+    :root {
+      --black: #050505;
+      --deep: #0b0b0b;
+      --soft-black: #141414;
+      --paper: #f2f0ea;
+      --paper-2: #e6e1d6;
+      --white: #ffffff;
+      --silver: #d8d8d3;
+      --muted: rgba(255,255,255,.68);
+      --muted-dark: rgba(0,0,0,.62);
+      --line: rgba(255,255,255,.15);
+      --line-dark: rgba(0,0,0,.14);
+      --accent: #bfc7cb;
+      --p: 0;
+      --nav-bg: rgba(5,5,5,0);
+      --nav-border: rgba(255,255,255,0);
+      --nav-blur: 0px;
+      --hero-scale: 1;
+      --hero-y: 0px;
+      --hero-copy-y: 0px;
+      --hero-copy-o: 1;
+      --corner-w: 28vw;
+      --corner-h: 25vh;
+      --corner-scale: 1;
+      --corner-x: 0vw;
+      --corner-y: 0vh;
+      --clip-top: 30%;
+      --clip-left: 43%;
+      --corner-radius: 36px;
+      --mission-y: 104%;
+      --ease: cubic-bezier(.2,.7,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    img { display: block; max-width: 100%; }
+    ::selection { background: #fff; color: #000; }
+
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 78px;
+      padding: 0 clamp(22px, 4vw, 72px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--nav-border);
+      backdrop-filter: blur(var(--nav-blur));
+      -webkit-backdrop-filter: blur(var(--nav-blur));
+      transition: background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .logo-image {
+      min-width: 120px;
+      min-height: 42px;
+      justify-content: flex-start;
+    }
+    .logo-img {
+      display: block;
+      width: auto;
+      height: 38px;
+      max-width: 170px;
+      object-fit: contain;
+    }
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      position: relative;
+      display: inline-block;
+    }
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.55);
+    }
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      top: 17px;
+      height: 2px;
+      background: #fff;
+      transform: rotate(-22deg);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(18px, 2.4vw, 38px);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .nav-links a { opacity: .84; transition: opacity .2s ease; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border: 1px solid rgba(255,255,255,.36);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .mobile-icon {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      position: relative;
+    }
+    .mobile-icon::before,
+    .mobile-icon::after {
+      content: "";
+      position: absolute;
+      left: 11px;
+      right: 11px;
+      height: 2px;
+      background: #fff;
+    }
+    .mobile-icon::before { top: 15px; }
+    .mobile-icon::after { bottom: 15px; }
+
+    .hero-scroll {
+      position: relative;
+      height: 238vh;
+      background: #050505;
+    }
+    .hero-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+      background: #050505;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(90deg, rgba(0,0,0,.82), rgba(0,0,0,.42) 45%, rgba(0,0,0,.12)),
+        linear-gradient(0deg, rgba(0,0,0,.86), rgba(0,0,0,0) 46%),
+        linear-gradient(180deg, rgba(0,0,0,.52), rgba(0,0,0,0) 27%),
+        url("https://images.unsplash.com/photo-1633707167344-503c1c751027?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=3000");
+      background-size: cover;
+      background-position: center;
+      transform: scale(var(--hero-scale)) translateY(var(--hero-y));
+      transform-origin: center;
+      transition: transform .05s linear;
+    }
+    .hero-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(118deg, rgba(255,255,255,.045) 0 1px, transparent 1px 52px),
+        radial-gradient(circle at 76% 48%, rgba(255,255,255,.15), transparent 25%);
+      opacity: .5;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .hero-copy {
+      position: absolute;
+      z-index: 15;
+      left: clamp(24px, 6vw, 96px);
+      bottom: clamp(86px, 12vh, 132px);
+      width: min(820px, 88vw);
+      transform: translateY(var(--hero-copy-y));
+      opacity: var(--hero-copy-o);
+      transition: transform .05s linear, opacity .05s linear;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.78);
+    }
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(255,255,255,.62);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero-copy h1 {
+      margin: 0;
+      font-size: clamp(54px, 9.2vw, 146px);
+      line-height: .84;
+      letter-spacing: -.078em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+    .hero-copy h1 span { display: block; }
+    .hero-copy p {
+      margin: 28px 0 34px;
+      max-width: 610px;
+      color: rgba(255,255,255,.80);
+      font-size: clamp(16px, 1.45vw, 22px);
+      line-height: 1.56;
+    }
+    .btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 26px;
+      border: 1px solid rgba(255,255,255,.64);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      transition: background .25s ease, color .25s ease, transform .25s ease, border-color .25s ease;
+    }
+    .btn:hover { background: #fff; color: #050505; transform: translateY(-2px); }
+    .btn.soft { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.18); }
+    .btn.dark { border-color: rgba(0,0,0,.28); color: #050505; }
+    .btn.dark:hover { background: #050505; color: #fff; }
+    .btn.fill { background: #fff; color: #050505; border-color: #fff; }
+    .btn.fill:hover { background: transparent; color: #fff; }
+
+    .hero-tags {
+      position: absolute;
+      z-index: 14;
+      right: clamp(24px, 4vw, 72px);
+      top: 18vh;
+      display: grid;
+      gap: 10px;
+      opacity: calc(.28 + var(--p) * .22);
+    }
+    .hero-tags span {
+      width: max-content;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(5,5,5,.24);
+      color: rgba(255,255,255,.74);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+
+    .corner-motion {
+      position: absolute;
+      z-index: 18;
+      right: 0;
+      bottom: 0;
+      width: var(--corner-w);
+      height: var(--corner-h);
+      min-width: 280px;
+      min-height: 220px;
+      overflow: hidden;
+      background: #e9e9e5;
+      transform-origin: right bottom;
+      transform: translate3d(var(--corner-x), var(--corner-y), 0) scale(var(--corner-scale));
+      clip-path: inset(var(--clip-top) 0 0 var(--clip-left) round var(--corner-radius));
+      box-shadow: 0 42px 120px rgba(0,0,0,.44);
+      will-change: width, height, transform, clip-path;
+    }
+    .corner-motion::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg, rgba(0,0,0,.48), rgba(0,0,0,.06) 45%, rgba(0,0,0,.20)),
+        linear-gradient(0deg, rgba(0,0,0,.30), rgba(0,0,0,0) 58%),
+        url("https://images.unsplash.com/photo-1648765333763-ee9d2664bf2f?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=2200");
+      background-size: cover;
+      background-position: center;
+      transform: scale(calc(1.16 - var(--p) * .10)) translate3d(calc(var(--p) * -3%), calc(var(--p) * 2%), 0);
+      transform-origin: center;
+    }
+    .corner-label {
+      position: absolute;
+      z-index: 3;
+      left: 30px;
+      bottom: 28px;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-size: 11px;
+      font-weight: 800;
+      text-shadow: 0 16px 44px rgba(0,0,0,.8);
+      opacity: calc(.22 + var(--p) * .78);
+      transform: translateY(calc((1 - var(--p)) * 20px));
+    }
+    .corner-label strong {
+      display: block;
+      font-size: clamp(24px, 3.2vw, 54px);
+      letter-spacing: -.05em;
+      line-height: .95;
+      margin-bottom: 10px;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      z-index: 20;
+      right: clamp(24px, 4vw, 72px);
+      bottom: 44px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+      opacity: calc(1 - var(--p) * 2.4);
+      transition: opacity .05s linear;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 58px;
+      background: rgba(255,255,255,.36);
+      overflow: hidden;
+      position: relative;
+    }
+    .scroll-line::after {
+      content: "";
+      position: absolute;
+      top: -48%;
+      left: 0;
+      width: 100%;
+      height: 42%;
+      background: #fff;
+      animation: scrollLine 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(210%); opacity: 0; }
+    }
+
+    .mission-card {
+      position: absolute;
+      z-index: 22;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      min-height: 56vh;
+      background: var(--paper);
+      color: #070707;
+      transform: translateY(var(--mission-y));
+      border-radius: 36px 36px 0 0;
+      padding: clamp(44px, 7vw, 94px) clamp(24px, 6vw, 98px);
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: clamp(30px, 7vw, 120px);
+      align-items: end;
+      box-shadow: 0 -30px 100px rgba(0,0,0,.38);
+      transition: transform .05s linear;
+    }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      font-size: 12px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.58);
+    }
+    .kicker::before {
+      content: "";
+      width: 44px;
+      height: 1px;
+      background: rgba(0,0,0,.35);
+    }
+    .mission-card h2 {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 92px);
+      line-height: .88;
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+    .mission-card p {
+      margin: 0 0 28px;
+      color: rgba(0,0,0,.68);
+      font-size: clamp(16px, 1.5vw, 21px);
+      line-height: 1.65;
+    }
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .mini-stat {
+      border-top: 1px solid rgba(0,0,0,.18);
+      padding-top: 16px;
+    }
+    .mini-stat b {
+      display: block;
+      font-size: clamp(26px, 3vw, 42px);
+      letter-spacing: -.04em;
+      margin-bottom: 4px;
+    }
+    .mini-stat span {
+      display: block;
+      font-size: 12px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.56);
+    }
+
+    section.block {
+      padding: clamp(66px, 8vw, 120px) clamp(24px, 6vw, 98px);
+    }
+    .paper { background: var(--paper); color: #070707; }
+    .dark { background: #080808; color: #fff; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: clamp(34px, 5vw, 68px);
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(40px, 6.6vw, 98px);
+      line-height: .88;
+      letter-spacing: -.065em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+    .section-head p {
+      margin: 0;
+      max-width: 560px;
+      line-height: 1.65;
+      color: rgba(0,0,0,.62);
+    }
+    .dark .section-head p { color: rgba(255,255,255,.62); }
+
+    .scene-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .scene-card {
+      min-height: 530px;
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      color: #fff;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+    }
+    .scene-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 70px rgba(0,0,0,.18);
+    }
+    .scene-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.82)),
+        var(--scene-img);
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.04);
+      transition: transform .6s var(--ease);
+    }
+    .scene-card:hover::before { transform: scale(1.12); }
+    .scene-card > * { position: relative; z-index: 2; }
+    .scene-card small {
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.70);
+      margin-bottom: 14px;
+    }
+    .scene-card h3 {
+      font-size: clamp(30px, 3.1vw, 48px);
+      line-height: .94;
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+    .scene-card p {
+      margin: 0;
+      color: rgba(255,255,255,.74);
+      line-height: 1.6;
+    }
+    .scene-mtb { --scene-img: url("https://images.unsplash.com/photo-1633707167344-503c1c751027?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=1800"); }
+    .scene-road { --scene-img: url("https://images.unsplash.com/photo-1772013972113-639493ea46a2?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=1800"); }
+    .scene-gravel { --scene-img: url("https://images.unsplash.com/photo-1603656454756-dcfa436d077b?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=1800"); }
+
+    .product-showcase {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 1px;
+      background: rgba(0,0,0,.12);
+      border: 1px solid rgba(0,0,0,.12);
+    }
+    .product-media {
+      min-height: 700px;
+      position: relative;
+      overflow: hidden;
+      background-image:
+        linear-gradient(90deg, rgba(0,0,0,.20), rgba(0,0,0,.02)),
+        linear-gradient(0deg, rgba(0,0,0,.34), rgba(0,0,0,0) 55%),
+        url("https://images.unsplash.com/photo-1648765333763-ee9d2664bf2f?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=2200");
+      background-size: cover;
+      background-position: center;
+    }
+    .product-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,.42), transparent 32%),
+        radial-gradient(circle at 74% 38%, rgba(255,255,255,.16), transparent 24%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .product-copy {
+      background: #fff;
+      padding: clamp(34px, 5vw, 70px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 42px;
+    }
+    .spec-title small,
+    .feature small {
+      font-size: 12px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.46);
+    }
+    .spec-title h3 {
+      margin: 16px 0 18px;
+      font-size: clamp(36px, 5vw, 76px);
+      line-height: .9;
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+    }
+    .spec-title p {
+      margin: 0;
+      line-height: 1.68;
+      color: rgba(0,0,0,.62);
+      font-size: 17px;
+    }
+    .spec-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line-dark);
+      border-left: 1px solid var(--line-dark);
+    }
+    .spec-table div {
+      padding: 18px;
+      border-right: 1px solid var(--line-dark);
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .spec-table span {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.44);
+      margin-bottom: 7px;
+    }
+    .spec-table b { font-size: 16px; }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .feature {
+      min-height: 340px;
+      padding: 28px;
+      background: #fff;
+      color: #070707;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.08);
+      transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .feature:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 60px rgba(0,0,0,.12);
+    }
+    .feature .icon {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,.22);
+      background:
+        radial-gradient(circle at 50% 50%, #101010 0 13%, transparent 13.5%),
+        repeating-conic-gradient(from 0deg, rgba(0,0,0,.45) 0deg 2deg, transparent 2deg 18deg);
+      box-shadow: inset 0 0 0 12px rgba(0,0,0,.06);
+    }
+    .feature h3 {
+      margin: 0 0 12px;
+      font-size: clamp(22px, 2vw, 32px);
+      line-height: .98;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+    .feature p {
+      margin: 0;
+      color: rgba(0,0,0,.62);
+      line-height: 1.58;
+    }
+
+    .visual-strip {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      min-height: 72vh;
+      background: #050505;
+      color: #fff;
+    }
+    .strip-photo {
+      position: relative;
+      background-image:
+        linear-gradient(90deg, rgba(0,0,0,.22), rgba(0,0,0,.65)),
+        url("https://images.unsplash.com/photo-1648817531573-dcbf3ef95c72?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=2200");
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .strip-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(115deg, rgba(255,255,255,.04) 0 1px, transparent 1px 48px);
+      pointer-events: none;
+    }
+    .strip-copy {
+      padding: clamp(42px, 6vw, 92px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #080808;
+    }
+    .strip-copy small {
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.54);
+      margin-bottom: 18px;
+    }
+    .strip-copy h2 {
+      margin: 0 0 24px;
+      font-size: clamp(42px, 5.4vw, 88px);
+      line-height: .86;
+      letter-spacing: -.065em;
+      text-transform: uppercase;
+    }
+    .strip-copy p {
+      color: rgba(255,255,255,.68);
+      line-height: 1.68;
+      font-size: 18px;
+      margin-bottom: 28px;
+    }
+
+    .image-mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      min-height: 520px;
+      gap: 1px;
+      background: #050505;
+    }
+    .mosaic-item {
+      position: relative;
+      overflow: hidden;
+      min-height: 520px;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.76)),
+        var(--mosaic-img);
+      background-size: cover;
+      background-position: center;
+    }
+    .mosaic-item:nth-child(1) { --mosaic-img: url("https://images.unsplash.com/photo-1772013972113-639493ea46a2?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=1800"); }
+    .mosaic-item:nth-child(2) { --mosaic-img: url("https://images.unsplash.com/photo-1758750436735-2ddc234d4099?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=2200"); }
+    .mosaic-item:nth-child(3) { --mosaic-img: url("https://images.unsplash.com/photo-1470860582708-d627d604a806?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=1800"); }
+    .mosaic-caption {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 28px;
+      z-index: 2;
+    }
+    .mosaic-caption small {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.66);
+    }
+    .mosaic-caption strong {
+      display: block;
+      font-size: clamp(24px, 2.5vw, 42px);
+      line-height: .96;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(0,0,0,.12);
+    }
+    .support-grid a {
+      min-height: 230px;
+      background: #fff;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background .25s ease, color .25s ease;
+    }
+    .support-grid a:hover { background: #050505; color: #fff; }
+    .support-grid strong {
+      font-size: 22px;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+    }
+    .support-grid span {
+      font-size: 13px;
+      line-height: 1.55;
+      color: currentColor;
+      opacity: .62;
+    }
+
+    .faq-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,.16);
+    }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,.16); }
+    .faq-q {
+      width: 100%;
+      border: 0;
+      background: none;
+      color: #fff;
+      padding: 26px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      text-align: left;
+      font-size: clamp(20px, 2.2vw, 34px);
+      letter-spacing: -.035em;
+      cursor: pointer;
+    }
+    .faq-q span:last-child {
+      font-size: 24px;
+      transition: transform .25s ease;
+    }
+    .faq-a {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .35s var(--ease);
+      color: rgba(255,255,255,.65);
+      line-height: 1.7;
+    }
+    .faq-a > div { overflow: hidden; }
+    .faq-a p { margin: 0 0 26px; }
+    .faq-item.open .faq-a { grid-template-rows: 1fr; }
+    .faq-item.open .faq-q span:last-child { transform: rotate(45deg); }
+
+    .partner-cta {
+      min-height: 76vh;
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 1px;
+      background: rgba(255,255,255,.14);
+    }
+    .partner-photo {
+      position: relative;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.70)),
+        url("https://images.unsplash.com/photo-1751703016148-a5a9041d00da?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=1800");
+      background-size: cover;
+      background-position: center;
+    }
+    .partner-photo .photo-label {
+      position: absolute;
+      left: clamp(28px, 5vw, 70px);
+      bottom: clamp(28px, 5vw, 70px);
+      right: 28px;
+    }
+    .partner-photo small {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.66);
+    }
+    .partner-photo strong {
+      display: block;
+      font-size: clamp(34px, 4vw, 68px);
+      line-height: .90;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+    }
+    .partner-form {
+      background: #0a0a0a;
+      padding: clamp(34px, 6vw, 88px);
+      display: grid;
+      align-content: end;
+      gap: 30px;
+    }
+    .partner-form h2 {
+      margin: 0;
+      font-size: clamp(44px, 7vw, 108px);
+      line-height: .86;
+      letter-spacing: -.07em;
+      text-transform: uppercase;
+    }
+    .partner-form p {
+      margin: 0;
+      color: rgba(255,255,255,.66);
+      line-height: 1.7;
+      font-size: 18px;
+      max-width: 620px;
+    }
+    .form-grid {
+      display: grid;
+      gap: 14px;
+    }
+    input, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.04);
+      color: #fff;
+      min-height: 52px;
+      padding: 0 16px;
+      outline: 0;
+    }
+    textarea {
+      min-height: 130px;
+      padding-top: 15px;
+      resize: vertical;
+    }
+    input::placeholder,
+    textarea::placeholder { color: rgba(255,255,255,.42); }
+    .submit-btn {
+      height: 54px;
+      border: 0;
+      background: #fff;
+      color: #050505;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    footer {
+      padding: 56px clamp(24px, 6vw, 98px);
+      background: #050505;
+      color: rgba(255,255,255,.58);
+      border-top: 1px solid rgba(255,255,255,.12);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    footer strong {
+      display: block;
+      color: #fff;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: 12px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .72s var(--ease), transform .72s var(--ease);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 1024px) {
+      .nav-links,
+      .nav-cta { display: none; }
+      .mobile-icon { display: block; }
+      .mission-card,
+      .product-showcase,
+      .visual-strip,
+      .partner-cta { grid-template-columns: 1fr; }
+      .scene-grid,
+      .image-mosaic { grid-template-columns: 1fr; }
+      .scene-card,
+      .mosaic-item { min-height: 380px; }
+      .support-grid { grid-template-columns: repeat(2, 1fr); }
+      .strip-photo { min-height: 480px; }
+      footer { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 767px) {
+      .site-nav { height: 68px; padding: 0 20px; }
+      .logo-img { height: 32px; max-width: 145px; }
+      .hero-scroll { height: 216vh; }
+      .hero-copy { left: 22px; right: 22px; bottom: 104px; }
+      .hero-copy h1 { font-size: clamp(48px, 16vw, 76px); }
+      .hero-tags { display: none; }
+      .corner-motion { min-width: 190px; min-height: 170px; }
+      .mission-card {
+        border-radius: 24px 24px 0 0;
+        padding: 42px 22px;
+      }
+      .mini-stats { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 18px; }
+      .product-media { min-height: 460px; }
+      .spec-table { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .support-grid { grid-template-columns: 1fr; }
+      .partner-photo { min-height: 460px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-nav">
+    <a class="logo logo-image" href="#top" aria-label="ARC Bike Hub">
+      <img src="https://arc.mrsxiao.com/wp-content/uploads/2026/05/logo.png" alt="ARC Bike Hub Logo" class="logo-img" />
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#scenes">Scenes</a>
+      <a href="#hubs">Hubs</a>
+      <a href="#features">Features</a>
+      <a href="#technology">Technology</a>
+      <a href="#partners">Partners</a>
+    </nav>
+    <a class="nav-cta" href="#partners">Start Project</a>
+    <a class="mobile-icon" href="#scenes" aria-label="Menu"></a>
+  </header>
+
+  <main id="top">
+    <section class="hero-scroll" id="hero">
+      <div class="hero-sticky">
+        <div class="hero-photo"></div>
+
+        <div class="hero-tags">
+          <span>Mountain Trail</span>
+          <span>Road Climb</span>
+          <span>Hub System</span>
+        </div>
+
+        <div class="hero-copy">
+          <div class="eyebrow">Outdoor riding × precision hubs</div>
+          <h1><span>Ride</span><span>Every Terrain</span></h1>
+          <p>ARC builds bicycle hub systems for mountain, road, gravel and partner-driven wheel projects. The homepage combines real riding scenes with close-up hub details to connect terrain, wheel performance and product engineering.</p>
+          <div class="btn-row">
+            <a class="btn" href="#hubs">View Hub Systems</a>
+            <a class="btn soft" href="#features">Explore Features</a>
+          </div>
+        </div>
+
+        <div class="corner-motion" aria-hidden="true">
+          <div class="corner-label">
+            <strong>Hub</strong>
+            Scroll-driven wheel detail
+          </div>
+        </div>
+
+        <div class="scroll-hint">
+          <span>Scroll</span>
+          <span class="scroll-line"></span>
+        </div>
+
+        <div class="mission-card">
+          <div>
+            <div class="kicker">ARC Positioning</div>
+            <h2>From outdoor terrain to hub performance.</h2>
+          </div>
+          <div>
+            <p>A strong hub website should not only display components. It should show where the product is used, how the wheel system behaves, and which specifications matter to riders, builders and brand partners.</p>
+            <div class="mini-stats">
+              <div class="mini-stat"><b>MTB</b><span>Trail / Boost / Disc</span></div>
+              <div class="mini-stat"><b>Road</b><span>Climb / Speed / Smoothness</span></div>
+              <div class="mini-stat"><b>Hub</b><span>Bearings / Freehub / Axle</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block paper" id="scenes">
+      <div class="section-head reveal">
+        <h2>Riding Scenes</h2>
+        <p>The visual direction is built around real riding contexts: mountain trails, winding road climbs and mixed outdoor terrain. Each scene leads the visitor back to hub and wheel system performance.</p>
+      </div>
+
+      <div class="scene-grid">
+        <article class="scene-card scene-mtb reveal">
+          <small>01 / Mountain Bike</small>
+          <h3>Trail control</h3>
+          <p>For MTB and enduro applications, highlight sealed bearings, disc brake compatibility, axle standards and stable wheel support on rough ground.</p>
+        </article>
+        <article class="scene-card scene-road reveal">
+          <small>02 / Road Cycling</small>
+          <h3>Climb efficiency</h3>
+          <p>For road wheel builds, emphasize smooth rotation, lightweight hub shells, clean engagement and a refined appearance.</p>
+        </article>
+        <article class="scene-card scene-gravel reveal">
+          <small>03 / Gravel & Outdoor</small>
+          <h3>Mixed terrain</h3>
+          <p>For gravel and all-road use, focus on durability, serviceability and compatibility across changing surfaces.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="block paper" id="hubs">
+      <div class="section-head reveal">
+        <h2>Hub & Wheel Focus</h2>
+        <p>The product area uses real close-up bike component photography, supported by a clean technical specification panel for fast buyer understanding.</p>
+      </div>
+
+      <div class="product-showcase reveal">
+        <div class="product-media" aria-label="Bicycle hub and brake close-up"></div>
+        <div class="product-copy">
+          <div class="spec-title">
+            <small>ARC Bicycle Hub</small>
+            <h3>The hub is the center of wheel performance.</h3>
+            <p>The hub links the frame, spokes, freehub body, axle, bearings and brake interface. It affects rotation feel, drivetrain response, service structure and the final quality of the wheel build.</p>
+          </div>
+
+          <div class="spec-table">
+            <div><span>Application</span><b>MTB / Road / Gravel</b></div>
+            <div><span>Hub Shell</span><b>CNC Aluminum Alloy</b></div>
+            <div><span>Bearing</span><b>Sealed Bearing System</b></div>
+            <div><span>Freehub</span><b>HG / MS / XD Options</b></div>
+            <div><span>Brake Interface</span><b>Center Lock / 6-Bolt</b></div>
+            <div><span>Partner Support</span><b>Specification Discussion</b></div>
+          </div>
+
+          <a class="btn dark" href="#partners">Request Hub Specification</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="block paper" id="features">
+      <div class="section-head reveal">
+        <h2>Hub Features</h2>
+        <p>Keep the feature language technical and practical. Avoid empty slogans; focus on the details that wheel builders and buyers actually check.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature reveal">
+          <div class="icon"></div>
+          <small>01 / Manufacturing</small>
+          <h3>CNC-machined shell</h3>
+          <p>Consistent hub body geometry, clean appearance and a solid base for professional wheel assembly.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="icon"></div>
+          <small>02 / Bearing</small>
+          <h3>Sealed bearing layout</h3>
+          <p>Designed for outdoor riding conditions where dust, moisture and repeated load can affect long-term performance.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="icon"></div>
+          <small>03 / Compatibility</small>
+          <h3>Multiple standards</h3>
+          <p>Support different axle, O.L.D, spoke hole, freehub body and brake interface requirements by project.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="icon"></div>
+          <small>04 / Partner Program</small>
+          <h3>Specification support</h3>
+          <p>Built for brand partners, wheel builders and distributors who need structured product discussions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="visual-strip" id="technology">
+      <div class="strip-photo" aria-label="Bicycle wheel and brake detail"></div>
+      <div class="strip-copy reveal">
+        <small>Technology Story</small>
+        <h2>Make hub engineering visible.</h2>
+        <p>Use this section to explain ratchet structures, sealed bearings, axle standards, disc brake interfaces, spoke geometry and freehub compatibility in a clear product-language system.</p>
+        <a class="btn" href="#support">View Technical Support</a>
+      </div>
+    </section>
+
+    <section class="image-mosaic" aria-label="Outdoor cycling and wheel detail mosaic">
+      <div class="mosaic-item">
+        <div class="mosaic-caption"><small>Outdoor road</small><strong>Built for climbing rhythm</strong></div>
+      </div>
+      <div class="mosaic-item">
+        <div class="mosaic-caption"><small>Wheel detail</small><strong>Spoke tension starts at the hub</strong></div>
+      </div>
+      <div class="mosaic-item">
+        <div class="mosaic-caption"><small>Adventure pause</small><strong>Real riders, real conditions</strong></div>
+      </div>
+    </section>
+
+    <section class="block paper" id="support">
+      <div class="section-head reveal">
+        <h2>Support Path</h2>
+        <p>Give buyers and partners a clear route from riding scenario to product specification, then from specification to inquiry.</p>
+      </div>
+
+      <div class="support-grid reveal">
+        <a href="#"><strong>Product Specs</strong><span>Model, spoke holes, O.L.D, freehub body, axle and brake interface.</span></a>
+        <a href="#"><strong>Compatibility</strong><span>MTB, road, gravel, folding and e-bike hub application notes.</span></a>
+        <a href="#"><strong>Spare Parts</strong><span>Bearings, freehub bodies, end caps, axles and lockrings.</span></a>
+        <a href="#"><strong>Inquiry</strong><span>Submit riding use, target market and hub specification requirements.</span></a>
+      </div>
+    </section>
+
+    <section class="block dark" id="faq">
+      <div class="section-head reveal">
+        <h2>FAQ</h2>
+        <p>Practical questions for buyers, distributors, wheel builders and brand partners.</p>
+      </div>
+
+      <div class="faq-wrap reveal">
+        <div class="faq-item open">
+          <button class="faq-q" type="button"><span>Why does the homepage start with riding scenes?</span><span>+</span></button>
+          <div class="faq-a"><div><p>Riding scenes make the product easier to understand. Visitors first see the terrain and use case, then move into the hub details, wheel system features and technical support path.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>Which hub details should be highlighted?</span><span>+</span></button>
+          <div class="faq-a"><div><p>Key details include hub shell material, weight, O.L.D, spoke holes, bearing structure, freehub body, axle standard, brake interface, color and partner-specific requirements.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>Can the photos be replaced with ARC-owned images?</span><span>+</span></button>
+          <div class="faq-a"><div><p>Yes. This version uses external real-world image links for preview. For production, replace them with ARC-owned riding photos, product close-ups and hub renders.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="partner-cta" id="partners">
+      <div class="partner-photo">
+        <div class="photo-label">
+          <small>Partner-ready product communication</small>
+          <strong>From wheel build to product specification</strong>
+        </div>
+      </div>
+
+      <form class="partner-form reveal" onsubmit="event.preventDefault(); alert('Static demo form. Connect it to your WordPress form plugin before production.');">
+        <h2>Build your next wheel project with ARC.</h2>
+        <p>Use this form area for partner inquiries. Recommended fields include riding category, hub standard, freehub body, brake interface, spoke holes, color, quantity and target market.</p>
+
+        <div class="form-grid">
+          <input type="text" placeholder="Name / Company" />
+          <input type="email" placeholder="Email" />
+          <input type="text" placeholder="Hub type: MTB / Road / Gravel / Folding" />
+          <textarea placeholder="Hub specification or project requirements"></textarea>
+          <button class="submit-btn" type="submit">Send Inquiry</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <strong>ARC Bike Hub</strong>
+      Outdoor riding scenes, bicycle hub products and wheel system technology in one homepage structure.
+    </div>
+    <div>
+      <strong>Products</strong>
+      MTB Hubs / Road Hubs / Gravel Hubs / Folding Hubs / E-Bike Hubs
+    </div>
+    <div>
+      <strong>Image Note</strong>
+      Demo photos use external preview links. Replace them with ARC-owned product and riding images before production.
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const hero = document.querySelector('.hero-scroll');
+      const reveals = document.querySelectorAll('.reveal');
+      const faqs = document.querySelectorAll('.faq-item');
+      let ticking = false;
+
+      function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
+      function easeOutCubic(x) { return 1 - Math.pow(1 - x, 3); }
+      function easeInOutCubic(x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+      function map(v, inMin, inMax, outMin, outMax) {
+        const p = clamp((v - inMin) / (inMax - inMin), 0, 1);
+        return outMin + (outMax - outMin) * p;
+      }
+
+      function updateHero() {
+        if (!hero) return;
+        const rect = hero.getBoundingClientRect();
+        const scrollable = hero.offsetHeight - window.innerHeight;
+        const p = scrollable > 0 ? clamp(-rect.top / scrollable, 0, 1) : 0;
+
+        const shrinkPhase = clamp(p / .26, 0, 1);
+        const stretchPhase = clamp((p - .22) / .58, 0, 1);
+        const missionPhase = clamp((p - .52) / .40, 0, 1);
+        const copyPhase = clamp(p / .48, 0, 1);
+
+        const cornerScale = p < .26
+          ? 1 - easeInOutCubic(shrinkPhase) * .28
+          : .72 + easeOutCubic(stretchPhase) * .58;
+
+        root.style.setProperty('--p', p.toFixed(4));
+        root.style.setProperty('--corner-scale', cornerScale.toFixed(4));
+        root.style.setProperty('--corner-w', map(p, 0, 1, 28, 78).toFixed(2) + 'vw');
+        root.style.setProperty('--corner-h', map(p, 0, 1, 25, 72).toFixed(2) + 'vh');
+        root.style.setProperty('--corner-x', map(p, 0, 1, 0, -7).toFixed(2) + 'vw');
+        root.style.setProperty('--corner-y', map(p, 0, 1, 0, -6).toFixed(2) + 'vh');
+        root.style.setProperty('--clip-top', map(p, 0, 1, 30, 0).toFixed(2) + '%');
+        root.style.setProperty('--clip-left', map(p, 0, 1, 43, 0).toFixed(2) + '%');
+        root.style.setProperty('--corner-radius', map(p, 0, 1, 36, 12).toFixed(2) + 'px');
+        root.style.setProperty('--mission-y', (104 - easeOutCubic(missionPhase) * 104).toFixed(2) + '%');
+        root.style.setProperty('--hero-copy-o', Math.max(0, 1 - easeInOutCubic(copyPhase) * 1.18).toFixed(4));
+        root.style.setProperty('--hero-copy-y', (-86 * easeOutCubic(copyPhase)).toFixed(2) + 'px');
+        root.style.setProperty('--hero-scale', (1 + p * .115).toFixed(4));
+        root.style.setProperty('--hero-y', (-p * 46).toFixed(2) + 'px');
+
+        if (p > .04 || window.scrollY > 50) {
+          root.style.setProperty('--nav-bg', 'rgba(5,5,5,.72)');
+          root.style.setProperty('--nav-border', 'rgba(255,255,255,.12)');
+          root.style.setProperty('--nav-blur', '18px');
+        } else {
+          root.style.setProperty('--nav-bg', 'rgba(5,5,5,0)');
+          root.style.setProperty('--nav-border', 'rgba(255,255,255,0)');
+          root.style.setProperty('--nav-blur', '0px');
+        }
+      }
+
+      function updateReveal() {
+        reveals.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * .86) el.classList.add('visible');
+        });
+      }
+
+      function update() {
+        updateHero();
+        updateReveal();
+        ticking = false;
+      }
+
+      function requestUpdate() {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      }
+
+      faqs.forEach(item => {
+        const btn = item.querySelector('.faq-q');
+        if (btn) btn.addEventListener('click', () => item.classList.toggle('open'));
+      });
+
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
+      window.addEventListener('load', update);
+      update();
+    })();
+  </script>
+</body>
+</html>
