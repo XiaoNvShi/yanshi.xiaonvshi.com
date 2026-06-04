@@ -22,16 +22,13 @@
       --line: rgba(255,255,255,.12);
       --line-dark: rgba(0,0,0,.14);
       --radius: 24px;
-      
-      /* 滚动动画动态变量 */
+      --p: 0;
+      --hero-cut: 0%;
       --hero-scale: 1;
       --hero-y: 0px;
       --copy-y: 0px;
       --copy-o: 1;
-      --mission-y: 100%;
-      --topFade: 0;
-      
-      /* 导航栏变量 */
+      --mission-y: 106%;
       --nav-bg: rgba(5,5,5,0);
       --nav-border: rgba(255,255,255,0);
       --nav-blur: 0px;
@@ -51,7 +48,6 @@
     button, input, textarea { font: inherit; }
     ::selection { background: #fff; color: #050505; }
 
-    /* Navigation */
     .site-nav {
       position: fixed;
       top: 0;
@@ -141,12 +137,11 @@
     .mobile-menu::before { top: 15px; }
     .mobile-menu::after { bottom: 15px; }
 
-    /* 1. Hero Container */
+    /* 1. Hero: full rectangle at first; subtle skew only after scrolling */
     .hero-scroll {
       position: relative;
-      height: 185vh; /* 优化滚动区域总高，让衔接更紧凑协调 */
+      height: 205vh;
       background: #050505;
-      z-index: 1;
     }
     .hero-sticky {
       position: sticky;
@@ -155,6 +150,8 @@
       overflow: hidden;
       isolation: isolate;
       background: #050505;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--hero-cut)), 0 100%);
+      transition: clip-path .08s linear;
     }
     .hero-bg {
       position: absolute;
@@ -168,8 +165,7 @@
       background-position: center;
       transform: scale(var(--hero-scale)) translateY(var(--hero-y));
       transform-origin: center;
-      transition: filter .08s linear, transform .05s linear !important;
-      filter: brightness(calc(1 - var(--topFade) * 0.12));
+      transition: transform .05s linear;
     }
     .hero-bg::before {
       content: "";
@@ -190,7 +186,6 @@
       transform: translateY(var(--copy-y));
       opacity: var(--copy-o);
       transition: transform .05s linear, opacity .05s linear;
-      pointer-events: none;
     }
     .eyebrow {
       display: inline-flex;
@@ -225,53 +220,30 @@
       font-size: clamp(16px, 1.45vw, 21px);
       line-height: 1.56;
     }
-    .btn-row { display: flex; gap: 14px; flex-wrap: wrap; pointer-events: auto; }
+    .btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
 
-    /* DT Swiss 风格 - 滚动上升的白色区域 */
-    .hero-summary,
-    .mission-card {
-      position: absolute !important;
+    .hero-summary {
+      position: absolute;
+      z-index: 13;
       left: 0;
       right: 0;
       bottom: 0;
-      width: 100%;
-      z-index: 15 !important;
-      overflow: hidden !important;
-      min-height: 76vh !important;
-      padding: clamp(118px, 13vw, 210px) clamp(24px, 6vw, 98px) !important;
-      
-      background: linear-gradient(180deg, #f4f4f4 0%, #eeeeee 56%, #e8e8e8 100%) !important;
+      min-height: 43vh;
+      background: linear-gradient(135deg, #e9e9e9, #d7d7d7);
       color: #080808;
-      
-      /* 精准控制裁剪，防止出现露缝硬线 */
-      clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%) !important;
-      
-      /* 结合位移与不透明度过渡，完美遮挡底层 */
-      transform: translateY(calc(var(--mission-y) + 0.1%)) !important;
-      opacity: calc(0.02 + var(--topFade) * 0.98) !important;
-      transition: opacity .08s linear, transform .05s linear, clip-path .08s linear !important;
-      box-shadow: none !important;
-      
+      transform: translateY(var(--mission-y));
+      padding: clamp(62px, 7vw, 104px) clamp(24px, 6vw, 98px) clamp(46px, 6vw, 74px);
       display: grid;
       grid-template-columns: 1.05fr .95fr;
       gap: clamp(28px, 6vw, 96px);
-      align-items: center !important;
+      align-items: end;
+      box-shadow: 0 -12px 42px rgba(0,0,0,.18);
     }
-    
-    .hero-summary::before, .hero-summary::after,
-    .mission-card::before, .mission-card::after {
-      content: none !important;
-      display: none !important;
-    }
-
-    .hero-summary > div:first-child { align-self: center !important; }
-    .hero-summary > div:last-child { align-self: center !important; }
-
     .kicker {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 28px !important;
+      margin-bottom: 20px;
       color: rgba(0,0,0,.54);
       font-size: 12px;
       letter-spacing: .15em;
@@ -285,19 +257,17 @@
     }
     .hero-summary h2 {
       margin: 0;
-      max-width: 980px !important;
-      font-size: clamp(42px, 5.8vw, 96px) !important;
-      line-height: .95 !important;
+      font-size: clamp(34px, 5.6vw, 80px);
+      line-height: .9;
       letter-spacing: -.06em;
       text-transform: uppercase;
       font-weight: 900;
     }
     .hero-summary p {
-      max-width: 620px !important;
       margin: 0 0 24px;
       color: rgba(0,0,0,.65);
-      font-size: clamp(17px, 1.45vw, 22px) !important;
-      line-height: 1.7 !important;
+      font-size: clamp(16px, 1.45vw, 20px);
+      line-height: 1.65;
     }
     .summary-points {
       display: grid;
@@ -321,17 +291,7 @@
       text-transform: uppercase;
     }
 
-    /* 2. Product System - 强制赋予高层级遮挡背景 */
-    .product-system {
-      position: relative;
-      z-index: 25; /* 极大提高层级，彻底阻断上方背景图穿透 */
-      background: #050505 !important;
-      margin-top: -2px; /* 微调边缘，严丝合缝 */
-      padding: clamp(70px, 8vw, 118px) clamp(24px, 6vw, 98px);
-      color: #fff;
-      border-top: 1px solid rgba(255,255,255,.08);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
+    /* Shared */
     .section-title {
       display: flex;
       align-items: end;
@@ -347,8 +307,12 @@
       text-transform: uppercase;
       font-weight: 900;
     }
-    .product-system .section-title p { color: rgba(255,255,255,.62); max-width: 560px; margin: 0; line-height: 1.65; }
-    
+    .section-title p {
+      max-width: 560px;
+      margin: 0;
+      color: var(--dark-text);
+      line-height: 1.65;
+    }
     .reveal {
       opacity: 0;
       transform: translateY(34px);
@@ -359,6 +323,15 @@
       transform: translateY(0);
     }
 
+    /* 2. Product system: normal rectangular section; rounded cards */
+    .product-system {
+      padding: clamp(70px, 8vw, 118px) clamp(24px, 6vw, 98px);
+      background: linear-gradient(180deg, #050505, #0d0d0d);
+      color: #fff;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .product-system .section-title p { color: rgba(255,255,255,.62); }
     .product-grid {
       display: grid;
       grid-template-columns: 1.2fr .8fr .8fr;
@@ -422,10 +395,8 @@
     .p-wheel { --img: url("https://images.unsplash.com/photo-1758750436735-2ddc234d4099?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=2200"); }
     .p-road { --img: url("https://images.unsplash.com/photo-1772013972113-639493ea46a2?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=78&w=1800"); }
 
-    /* 3. Technology */
+    /* 3. Technology: normal rectangular big section */
     .tech {
-      position: relative;
-      z-index: 25;
       display: grid;
       grid-template-columns: 1.2fr .8fr;
       min-height: 76vh;
@@ -451,6 +422,7 @@
         linear-gradient(160deg, #151515, #080808 66%, #050505);
     }
     .tech-copy small,
+    .support-intro small,
     .partner-text small {
       display: block;
       margin-bottom: 18px;
@@ -460,6 +432,7 @@
       text-transform: uppercase;
     }
     .tech-copy h2,
+    .support-intro h2,
     .partner-text h2 {
       margin: 0 0 24px;
       font-size: clamp(42px, 6.2vw, 92px);
@@ -468,6 +441,7 @@
       text-transform: uppercase;
     }
     .tech-copy p,
+    .support-intro p,
     .partner-text p {
       max-width: 620px;
       margin: 0 0 30px;
@@ -476,35 +450,12 @@
       font-size: 18px;
     }
 
-    /* 4. Scenes Block Optimization */
+    /* 4. Scenes: rectangular section; rounded cards */
     .scenes {
-      position: relative;
-      z-index: 25;
       background: linear-gradient(180deg, #e5e5e5, #d8d8d8);
       color: #080808;
       padding: clamp(70px, 8vw, 118px) clamp(24px, 6vw, 98px);
     }
-    #scenes .section-title,
-    .scenes .section-title {
-      display: grid !important;
-      grid-template-columns: minmax(420px, 1.1fr) minmax(320px, .9fr) !important;
-      align-items: center !important;
-      gap: clamp(36px, 6vw, 120px) !important;
-      margin-bottom: 44px !important;
-    }
-    #scenes .section-title h2, .scenes .section-title h2 { align-self: start !important; margin: 0 !important; }
-    #scenes .section-title p, .scenes .section-title p {
-      align-self: center !important;
-      justify-self: start !important;
-      margin: 0 !important;
-      max-width: 560px !important;
-      transform: translateY(18px) !important;
-      color: rgba(0,0,0,.56) !important;
-      line-height: 1.7 !important;
-      font-size: 15px !important;
-    }
-    #scenes .scene-grid, .scenes .scene-grid { margin-top: 6px !important; }
-
     .scene-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -543,8 +494,6 @@
 
     /* 5. Support */
     .support {
-      position: relative;
-      z-index: 25;
       background:
         radial-gradient(circle at 88% 10%, rgba(255,255,255,.055), transparent 31%),
         linear-gradient(180deg, #101010, #050505);
@@ -594,10 +543,8 @@
       line-height: 1.55;
     }
 
-    /* 6. Partner Simplification: CTA Button Only */
+    /* 6. Partner: normal rectangular section */
     .partner {
-      position: relative;
-      z-index: 25;
       display: grid;
       grid-template-columns: .95fr 1.05fr;
       min-height: 74vh;
@@ -638,43 +585,43 @@
       padding: clamp(46px, 6vw, 88px);
       display: grid;
       align-content: end;
-      gap: 24px;
+      gap: 28px;
       background:
         radial-gradient(circle at 85% 13%, rgba(255,255,255,.08), transparent 30%),
         linear-gradient(160deg, #171717, #090909 62%, #050505);
     }
-    .partner-cta-simple { justify-content: center !important; align-content: center !important; gap: 24px !important; }
-    .partner-cta-simple p { max-width: 620px !important; margin-bottom: 8px !important; }
-    
-    .partner-contact-btn {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      width: min(520px, 100%) !important;
-      min-height: 58px !important;
-      border-radius: 999px !important;
-      border: 1px solid rgba(255,255,255,.68) !important;
-      background: #fff !important;
-      color: #050505 !important;
-      font-size: 13px !important;
-      font-weight: 800 !important;
-      letter-spacing: .16em !important;
-      text-transform: uppercase !important;
-      transition: background .25s ease, color .25s ease, transform .25s ease !important;
+    .form-grid { display: grid; gap: 14px; }
+    input,
+    textarea {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.035);
+      color: #fff;
+      outline: 0;
     }
-    .partner-contact-btn:hover {
-      background: transparent !important;
-      color: #fff !important;
-      transform: translateY(-2px) !important;
+    textarea {
+      min-height: 128px;
+      padding-top: 15px;
+      resize: vertical;
     }
-
-    .partner-text .form-grid, .partner-text input, .partner-text textarea, .partner-text .submit {
-      display: none !important;
+    input::placeholder,
+    textarea::placeholder { color: rgba(255,255,255,.42); }
+    .submit {
+      height: 54px;
+      border: 0;
+      border-radius: 14px;
+      background: #eee;
+      color: #050505;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-weight: 800;
+      cursor: pointer;
     }
 
     footer {
-      position: relative;
-      z-index: 25;
       padding: 70px clamp(24px, 6vw, 98px) 44px;
       background: #050505;
       color: rgba(255,255,255,.58);
@@ -684,7 +631,6 @@
       font-size: 13px;
       line-height: 1.7;
       border-top: 1px solid rgba(255,255,255,.075);
-      margin-top: 0 !important;
     }
     footer strong {
       display: block;
@@ -695,277 +641,1178 @@
       font-size: 12px;
     }
 
-    /* Responsive Adapters */
     @media (max-width: 1024px) {
-      .nav-links, .nav-cta { display: none; }
+      .nav-links,
+      .nav-cta { display: none; }
       .mobile-menu { display: block; }
-      .hero-summary, .tech, .support-wrap, .partner { grid-template-columns: 1fr; }
-      .hero-summary { clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%) !important; padding-top: 96px !important; padding-bottom: 90px !important; min-height: 82vh !important;}
+      .hero-summary,
+      .tech,
+      .support-wrap,
+      .partner { grid-template-columns: 1fr; }
       .product-grid { grid-template-columns: 1fr; }
-      .tech-photo, .partner-photo { min-height: 430px; }
-      .scene-grid, .support-grid { grid-template-columns: 1fr; }
-      #scenes .section-title, .scenes .section-title { grid-template-columns: 1fr !important; gap: 18px !important; margin-bottom: 34px !important; }
-      #scenes .section-title p, .scenes .section-title p { transform: none !important; max-width: 100% !important; }
+      .tech-photo,
+      .partner-photo { min-height: 430px; }
+      .scene-grid,
+      .support-grid { grid-template-columns: 1fr; }
       footer { grid-template-columns: 1fr; }
     }
     @media (max-width: 767px) {
       .site-nav { height: 68px; padding: 0 20px; }
       .logo-img { height: 32px; max-width: 145px; }
-      .hero-scroll { height: 180vh; }
+      .hero-scroll { height: 198vh; }
       .hero-copy { left: 22px; right: 22px; bottom: 104px; }
       .hero-copy h1 { font-size: clamp(48px, 16vw, 76px); }
-      .hero-summary { padding: 82px 22px 72px !important; min-height: 88vh !important; clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%) !important; opacity: calc(.04 + var(--topFade) * .96) !important; }
-      .hero-summary h2 { font-size: clamp(36px, 10vw, 56px) !important; }
+      .hero-summary { padding: 58px 22px 42px; }
       .summary-points { grid-template-columns: 1fr; }
       .section-title { display: block; }
       .section-title p { margin-top: 18px; }
-      #scenes .section-title p, .scenes .section-title p { font-size: 14px !important; }
-      .product-card, .scene-card, .support-grid a { border-radius: 16px; }
-      .partner-contact-btn { min-height: 54px; width: 100%; }
+      .product-card,
+      .scene-card,
+      .support-grid a { border-radius: 16px; }
     }
-  </style>
+  
+    
+
+    /* HERO / MISSION SCROLL FIX — consolidated
+       Goal: keep the Hero image inside its own layer, make the summary panel opaque,
+       and remove pseudo masks that were exposing the next section background. */
+    :root {
+      --topFade: 0;
+      --hero-cut: 0%;
+      --mission-y: 108%;
+    }
+
+    .hero-scroll {
+      position: relative !important;
+      height: 188vh !important;
+      background: #050505 !important;
+      overflow: clip !important;
+    }
+
+    .hero-sticky {
+      position: sticky !important;
+      top: 0 !important;
+      height: 100vh !important;
+      overflow: hidden !important;
+      isolation: isolate !important;
+      background: #050505 !important;
+      clip-path: none !important;
+    }
+
+    .hero-sticky::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 36vh;
+      z-index: 2;
+      pointer-events: none;
+      opacity: calc(var(--topFade) * .86);
+      background: linear-gradient(180deg, rgba(5,5,5,0) 0%, #050505 88%);
+    }
+
+    .hero-bg {
+      z-index: 0 !important;
+      transform: translate3d(0, var(--hero-y), 0) scale(var(--hero-scale)) !important;
+      transform-origin: center !important;
+      filter: brightness(calc(1 - var(--topFade) * .14));
+      will-change: transform, filter;
+    }
+
+    .hero-copy {
+      z-index: 4 !important;
+      will-change: transform, opacity;
+    }
+
+    .hero-summary,
+    .mission-card {
+      position: absolute !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: -1px !important;
+      z-index: 8 !important;
+      transform: translate3d(0, var(--mission-y), 0) !important;
+      opacity: 1 !important;
+      overflow: hidden !important;
+      display: grid !important;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr) !important;
+      gap: clamp(28px, 6vw, 90px) !important;
+      align-items: center !important;
+      min-height: clamp(500px, 64vh, 720px) !important;
+      padding: clamp(92px, 9vw, 150px) clamp(24px, 6vw, 98px) clamp(72px, 7vw, 118px) !important;
+      color: #080808 !important;
+      background: linear-gradient(180deg, #f6f6f6 0%, #eeeeee 58%, #e6e6e6 100%) !important;
+      clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%) !important;
+      box-shadow: 0 -24px 60px rgba(0,0,0,.16) !important;
+      will-change: transform;
+    }
+
+    .hero-summary::before,
+    .hero-summary::after,
+    .mission-card::before,
+    .mission-card::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .hero-summary h2,
+    .mission-card h2 {
+      max-width: 960px !important;
+      font-size: clamp(40px, 5.6vw, 88px) !important;
+      line-height: .94 !important;
+      letter-spacing: -.06em !important;
+    }
+
+    .hero-summary p,
+    .mission-card p {
+      max-width: 620px !important;
+      font-size: clamp(16px, 1.35vw, 20px) !important;
+      line-height: 1.68 !important;
+    }
+
+    .hero-scroll + section {
+      position: relative !important;
+      z-index: 1 !important;
+      margin-top: 0 !important;
+    }
+
+    .hero-scroll + section::before {
+      content: none !important;
+      display: none !important;
+    }
+
+    @supports not (overflow: clip) {
+      .hero-scroll { overflow: hidden !important; }
+    }
+
+    @media (max-width: 1024px) {
+      .hero-scroll { height: 178vh !important; }
+
+      .hero-summary,
+      .mission-card {
+        grid-template-columns: 1fr !important;
+        min-height: clamp(520px, 70vh, 760px) !important;
+        padding: 88px 28px 76px !important;
+        clip-path: polygon(0 7%, 100% 0, 100% 100%, 0 100%) !important;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-scroll { height: 172vh !important; }
+      .hero-copy { left: 22px !important; right: 22px !important; bottom: 92px !important; }
+
+      .hero-summary,
+      .mission-card {
+        min-height: auto !important;
+        padding: 78px 22px 64px !important;
+        clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%) !important;
+      }
+
+      .hero-summary h2,
+      .mission-card h2 {
+        font-size: clamp(36px, 10vw, 56px) !important;
+      }
+    }
+
+/* Partner inquiry simplified: button only */
+    .anchor-contact {
+      display: block;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .partner-cta-simple {
+      justify-content: center !important;
+      align-content: center !important;
+      gap: 24px !important;
+    }
+
+    .partner-cta-simple p {
+      max-width: 620px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .partner-contact-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: min(520px, 100%);
+      min-height: 58px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.68);
+      background: #fff;
+      color: #050505;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      transition: background .25s ease, color .25s ease, transform .25s ease, border-color .25s ease;
+    }
+
+    .partner-contact-btn:hover {
+      background: transparent;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .partner-text .form-grid,
+    .partner-form .form-grid,
+    .partner-text input,
+    .partner-text textarea,
+    .partner-form input,
+    .partner-form textarea,
+    .partner-text .submit,
+    .partner-form .submit,
+    .partner-text .submit-btn,
+    .partner-form .submit-btn {
+      display: none !important;
+    }
+
+    footer {
+      margin-top: 0 !important;
+    }
+
+    @media (max-width: 767px) {
+      .partner-contact-btn {
+        min-height: 54px;
+        width: 100%;
+      }
+    }
+
+  
+    
+/* Riding Scenes position refinement */
+    #scenes .section-title,
+    .scenes .section-title,
+    .section-light .section-title {
+      display: grid !important;
+      grid-template-columns: minmax(420px, 1.1fr) minmax(320px, .9fr) !important;
+      align-items: center !important;
+      gap: clamp(36px, 6vw, 120px) !important;
+      margin-bottom: 44px !important;
+    }
+
+    #scenes .section-title h2,
+    .scenes .section-title h2,
+    .section-light .section-title h2 {
+      align-self: start !important;
+      margin: 0 !important;
+    }
+
+    #scenes .section-title p,
+    .scenes .section-title p,
+    .section-light .section-title p {
+      align-self: center !important;
+      justify-self: start !important;
+      margin: 0 !important;
+      max-width: 560px !important;
+      transform: translateY(18px) !important;
+      color: rgba(0,0,0,.56) !important;
+      line-height: 1.7 !important;
+      font-size: 15px !important;
+    }
+
+    /* Let the cards start slightly closer to the title block */
+    #scenes .scene-grid,
+    .scenes .scene-grid,
+    .section-light .scene-grid {
+      margin-top: 6px !important;
+    }
+
+    @media (max-width: 1024px) {
+      #scenes .section-title,
+      .scenes .section-title,
+      .section-light .section-title {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+        margin-bottom: 34px !important;
+      }
+
+      #scenes .section-title p,
+      .scenes .section-title p,
+      .section-light .section-title p {
+        transform: none !important;
+        max-width: 100% !important;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #scenes .section-title,
+      .scenes .section-title,
+      .section-light .section-title {
+        gap: 14px !important;
+      }
+
+      #scenes .section-title p,
+      .scenes .section-title p,
+      .section-light .section-title p {
+        font-size: 14px !important;
+      }
+    }
+
+  
+    
+/* DT Swiss inspired footer adapted for ARC */
+    .footer-dt-arc{
+      background:#000 !important;
+      color:rgba(255,255,255,.82) !important;
+      padding:72px clamp(24px,6vw,72px) 26px !important;
+      display:grid !important;
+      grid-template-columns:minmax(220px,1.25fr) repeat(4,minmax(150px,.9fr)) !important;
+      gap:28px 46px !important;
+      border-top:1px solid rgba(255,255,255,.08) !important;
+    }
+
+    .footer-dt-brand{
+      display:grid;
+      align-content:start;
+      gap:18px;
+      padding-right:24px;
+    }
+
+    .footer-dt-logo{
+      color:#fff;
+      font-size:clamp(30px,2.7vw,42px);
+      font-weight:900;
+      letter-spacing:-.04em;
+      text-transform:uppercase;
+      line-height:.95;
+    }
+
+    .footer-dt-logo span{
+      font-weight:400;
+      margin-left:4px;
+      letter-spacing:.02em;
+    }
+
+    .footer-dt-brand p{
+      margin:0;
+      color:rgba(255,255,255,.56);
+      max-width:320px;
+      line-height:1.75;
+      font-size:14px;
+    }
+
+    .footer-dt-col{
+      display:grid;
+      align-content:start;
+      gap:12px;
+    }
+
+    .footer-dt-col h4,
+    .footer-dt-social h5{
+      margin:0 0 6px 0;
+      color:rgba(255,255,255,.42);
+      font-size:14px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .footer-dt-col a{
+      color:rgba(255,255,255,.90);
+      font-size:15px;
+      line-height:1.25;
+      transition:color .2s ease, transform .2s ease;
+      width:max-content;
+    }
+
+    .footer-dt-col a:hover,
+    .footer-dt-social-links a:hover,
+    .footer-dt-bottom a:hover{
+      color:#fff;
+      transform:translateX(2px);
+    }
+
+    .footer-dt-social{
+      margin-top:26px;
+      display:grid;
+      gap:12px;
+    }
+
+    .footer-dt-social-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px 18px;
+    }
+
+    .footer-dt-social-links a{
+      color:rgba(255,255,255,.88);
+      font-size:14px;
+      transition:color .2s ease, transform .2s ease;
+    }
+
+    .footer-dt-bottom{
+      grid-column:1 / -1;
+      margin-top:20px;
+      padding-top:18px;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      color:rgba(255,255,255,.42);
+      font-size:12px;
+    }
+
+    .footer-dt-bottom-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+    }
+
+    .footer-dt-bottom a{
+      color:rgba(255,255,255,.72);
+      font-size:12px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      transition:color .2s ease, transform .2s ease;
+    }
+
+    @media (max-width: 1200px){
+      .footer-dt-arc{
+        grid-template-columns:minmax(220px,1.2fr) repeat(2,minmax(160px,1fr));
+      }
+      .footer-dt-col-partner{
+        grid-column:auto;
+      }
+    }
+
+    @media (max-width: 900px){
+      .footer-dt-arc{
+        grid-template-columns:1fr 1fr;
+        gap:24px 28px !important;
+      }
+      .footer-dt-bottom{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @media (max-width: 640px){
+      .footer-dt-arc{
+        grid-template-columns:1fr;
+      }
+      .footer-dt-logo{
+        font-size:32px;
+      }
+    }
+
+  
+    
+/* Fullscreen top mega navigation: DT Swiss inspired, adapted for ARC */
+    .arc-mega-nav {
+      position: static;
+      z-index: 130;
+    }
+
+    .arc-mega-nav,
+    .arc-mega-nav .nav-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .arc-mega-nav > a,
+    .arc-mega-nav .nav-item > a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 76px;
+      color: rgba(255,255,255,.84);
+      opacity: 1 !important;
+      white-space: nowrap;
+    }
+
+    .arc-mega-nav .nav-item > a::after {
+      content: "";
+      width: 5px;
+      height: 5px;
+      margin-left: 8px;
+      border-right: 1px solid rgba(255,255,255,.62);
+      border-bottom: 1px solid rgba(255,255,255,.62);
+      transform: rotate(45deg) translateY(-2px);
+      opacity: .72;
+    }
+
+    .mega-panel {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 76px;
+      height: calc(100vh - 76px);
+      z-index: 110;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(255,255,255,.08), transparent 32%),
+        linear-gradient(180deg, rgba(8,8,8,.98), rgba(0,0,0,.98));
+      border-top: 1px solid rgba(255,255,255,.10);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity .24s ease, transform .24s ease, visibility .24s ease;
+      overflow: auto;
+    }
+
+    .nav-item:hover .mega-panel,
+    .nav-item:focus-within .mega-panel {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .mega-inner {
+      min-height: 100%;
+      padding: clamp(56px, 6vw, 92px) clamp(32px, 7vw, 110px);
+      display: grid;
+      grid-template-columns: minmax(320px, .85fr) minmax(520px, 1.4fr);
+      gap: clamp(44px, 7vw, 120px);
+      align-items: start;
+    }
+
+    .mega-heading {
+      max-width: 520px;
+      display: grid;
+      gap: 20px;
+      align-content: start;
+    }
+
+    .mega-heading small {
+      color: rgba(255,255,255,.48);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .mega-heading strong {
+      display: block;
+      color: #fff;
+      font-size: clamp(38px, 5vw, 82px);
+      line-height: .88;
+      letter-spacing: -.065em;
+      text-transform: uppercase;
+    }
+
+    .mega-heading p {
+      margin: 0;
+      color: rgba(255,255,255,.62);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 440px;
+    }
+
+    .mega-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: max-content;
+      min-height: 44px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.50);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+
+    .mega-cta:hover {
+      background: #fff;
+      color: #050505;
+      transform: translateY(-1px);
+    }
+
+    .mega-columns {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(150px, 1fr));
+      gap: clamp(26px, 4vw, 64px);
+      padding-top: 8px;
+    }
+
+    .mega-col {
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.14);
+    }
+
+    .mega-col h4 {
+      margin: 0 0 6px;
+      color: rgba(255,255,255,.42);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .mega-col a {
+      color: rgba(255,255,255,.86);
+      font-size: 16px;
+      line-height: 1.25;
+      width: max-content;
+      transition: color .18s ease, transform .18s ease;
+    }
+
+    .mega-col a:hover {
+      color: #fff;
+      transform: translateX(3px);
+    }
+
+    .nav:hover,
+    .nav:focus-within {
+      background: rgba(5,5,5,.92) !important;
+      border-bottom-color: rgba(255,255,255,.12) !important;
+      backdrop-filter: blur(18px) !important;
+      -webkit-backdrop-filter: blur(18px) !important;
+    }
+
+    @media (max-width: 1200px) {
+      .mega-inner {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+
+      .mega-heading strong {
+        max-width: 760px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .arc-mega-nav {
+        display: none !important;
+      }
+
+      .mega-panel {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .mega-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  
+    
+/* Shrink Partner / Inquiry section by about half */
+    .partner,
+    .partner-cta {
+      min-height: 40vh !important;
+    }
+
+    .partner-photo {
+      min-height: 40vh !important;
+    }
+
+    .partner-text,
+    .partner-form,
+    .partner-cta-simple {
+      min-height: 40vh !important;
+      padding-top: clamp(34px, 4vw, 56px) !important;
+      padding-bottom: clamp(34px, 4vw, 56px) !important;
+      gap: 18px !important;
+      align-content: center !important;
+      justify-content: center !important;
+    }
+
+    .partner-text h2,
+    .partner-form h2,
+    .partner-cta-simple h2 {
+      font-size: clamp(34px, 4.6vw, 68px) !important;
+      line-height: .88 !important;
+      margin-bottom: 8px !important;
+    }
+
+    .partner-text p,
+    .partner-form p,
+    .partner-cta-simple p {
+      max-width: 560px !important;
+      font-size: 15px !important;
+      line-height: 1.65 !important;
+      margin-bottom: 6px !important;
+    }
+
+    .partner-contact-btn {
+      width: min(360px, 100%) !important;
+      min-height: 48px !important;
+      font-size: 12px !important;
+    }
+
+    .partner-photo div {
+      bottom: clamp(24px, 4vw, 48px) !important;
+    }
+
+    .partner-photo strong {
+      font-size: clamp(28px, 3.2vw, 48px) !important;
+      line-height: .92 !important;
+    }
+
+    .partner-photo small {
+      margin-bottom: 10px !important;
+    }
+
+    @media (max-width: 1024px) {
+      .partner,
+      .partner-cta,
+      .partner-photo,
+      .partner-text,
+      .partner-form,
+      .partner-cta-simple {
+        min-height: auto !important;
+      }
+
+      .partner-photo {
+        min-height: 320px !important;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .partner-photo {
+        min-height: 280px !important;
+      }
+
+      .partner-text,
+      .partner-form,
+      .partner-cta-simple {
+        padding-top: 36px !important;
+        padding-bottom: 40px !important;
+      }
+    }
+
+  
+    
+
+    /* Unified CTA sizing — one final rule instead of repeated button reductions */
+    .partner-contact-btn,
+    .btn,
+    .mega-cta,
+    .submit,
+    .submit-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: auto !important;
+      min-width: 132px !important;
+      min-height: 34px !important;
+      padding: 0 14px !important;
+      border-radius: 999px !important;
+      font-size: 10px !important;
+      font-weight: 800 !important;
+      letter-spacing: .10em !important;
+      line-height: 1 !important;
+      text-transform: uppercase !important;
+    }
+
+    .nav-cta {
+      min-width: 96px !important;
+      min-height: 30px !important;
+      padding: 0 12px !important;
+      font-size: 9px !important;
+      letter-spacing: .10em !important;
+    }
+
+    .btn-row { gap: 8px !important; }
+
+    @media (max-width: 767px) {
+      .partner-contact-btn,
+      .btn,
+      .mega-cta,
+      .submit,
+      .submit-btn {
+        min-width: 128px !important;
+        min-height: 32px !important;
+      }
+    }
+
+</style>
 </head>
 <body>
-
-  <nav class="site-nav">
-    <img src="https://images.unsplash.com/photo-1633707167344-503c1c751027?auto=format&fit=crop&fm=jpg&q=40&w=200" alt="ARC" class="logo-img" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
-    <div id="logo-fallback" style="display:none; font-weight:900; font-size:20px; letter-spacing:-0.03em;">ARC.</div>
+  <header class="site-nav">
+    <a class="logo logo-image" href="#top" aria-label="ARC Bike Hub"><img src="https://arc.mrsxiao.com/wp-content/uploads/2026/05/logo.png" alt="ARC Bike Hub Logo" class="logo-img" /></a>
     
-    <div class="nav-links">
-      <a href="#products">Products</a>
-      <a href="#tech">Technology</a>
-      <a href="#scenes">Scenes</a>
-      <a href="#support">Support</a>
-    </div>
-    <a href="#contact" class="nav-cta">Inquiry</a>
-    <div class="mobile-menu"></div>
-  </nav>
+    
+    <nav class="nav-links arc-mega-nav" aria-label="Primary navigation">
+      <a class="nav-link-simple" href="#top">Home</a>
 
-  <div class="hero-scroll">
-    <div class="hero-sticky">
-      <div class="hero-bg"></div>
-      <div class="hero-copy">
-        <div class="eyebrow">Precision Craftsmanship</div>
-        <h1><span>Uncompromised</span><span>Hub Systems</span></h1>
-        <p>Engineered for pure energy transfer. ARC hub technology merges elite cycling dynamics with tight tolerances to redefine performance on any terrain.</p>
-        <div class="btn-row">
-          <a href="#products" class="btn fill">Explore Range</a>
-          <a href="#tech" class="btn">Technology</a>
+      <div class="nav-item has-mega">
+        <a href="#systems">Hubs</a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-heading">
+              <small>ARC Hub Systems</small>
+              <strong>Find the right hub for your wheel project.</strong>
+              <p>Browse hub platforms by riding category, axle standard, freehub body and project requirement.</p>
+              <a class="mega-cta" href="#">Find Your Hub</a>
+            </div>
+
+            <div class="mega-columns">
+              <div class="mega-col">
+                <h4>Hub Categories</h4>
+                <a href="#">Disc Hubs</a>
+                <a href="#">Road Hubs</a>
+                <a href="#">Folding Bike Hubs</a>
+                <a href="#">Fixed Gear Hubs</a>
+              </div>
+              <div class="mega-col">
+                <h4>Specialized Hubs</h4>
+                <a href="#">BMX Hubs</a>
+                <a href="#">Internal Geared Hub</a>
+                <a href="#">OEM Hubs</a>
+                <a href="#">Others</a>
+              </div>
+              <div class="mega-col">
+                <h4>Parts & Standards</h4>
+                <a href="#">QR</a>
+                <a href="#">Freehub Body</a>
+                <a href="#">Axle Standards</a>
+                <a href="#">Brake Interface</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <section class="hero-summary">
-      <div>
-        <div class="kicker">The Arc Mission</div>
-        <h2>From terrain to hub performance.</h2>
+      <div class="nav-item has-mega">
+        <a href="#systems">Wheels</a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-heading">
+              <small>Wheel Applications</small>
+              <strong>Select by terrain and riding style.</strong>
+              <p>Guide visitors from use scenario to the right wheel and hub configuration.</p>
+              <a class="mega-cta" href="#">Find Your Wheel</a>
+            </div>
+
+            <div class="mega-columns">
+              <div class="mega-col">
+                <h4>Mountain</h4>
+                <a href="#">All Mountain</a>
+                <a href="#">Cross Country</a>
+                <a href="#">Enduro</a>
+                <a href="#">Dirt Jump</a>
+              </div>
+              <div class="mega-col">
+                <h4>Gravity</h4>
+                <a href="#">Downhill</a>
+                <a href="#">Trail</a>
+                <a href="#">E-MTB</a>
+                <a href="#">Freeride</a>
+              </div>
+              <div class="mega-col">
+                <h4>Road & Mixed</h4>
+                <a href="#">Gravel</a>
+                <a href="#">Road</a>
+                <a href="#">All Road</a>
+                <a href="#">Wheel Finder</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <p>We see wheels not as basic components, but as complete energy transfer environments. By reducing friction down to critical structural limits, we keep momentum alive where others fade.</p>
-        <div class="summary-points">
+
+      <div class="nav-item has-mega">
+        <a href="#support">Support</a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-heading">
+              <small>Support Center</small>
+              <strong>Service information before and after the build.</strong>
+              <p>Collect technical documents, service videos, warranty information and contact channels in one place.</p>
+              <a class="mega-cta" href="inquiry.html">Contact Us</a>
+            </div>
+
+            <div class="mega-columns">
+              <div class="mega-col">
+                <h4>Self-service</h4>
+                <a href="#support">Manuals</a>
+                <a href="#support">Service Videos</a>
+                <a href="#support">FAQ</a>
+                <a href="#support">Compatibility Guide</a>
+              </div>
+              <div class="mega-col">
+                <h4>After-sales</h4>
+                <a href="#support">Warranty</a>
+                <a href="#support">Spare Parts</a>
+                <a href="#support">Hub Manuals</a>
+                <a href="#support">Maintenance</a>
+              </div>
+              <div class="mega-col">
+                <h4>Contact</h4>
+                <a href="inquiry.html">Contact Us</a>
+                <a href="inquiry.html">Project Inquiry</a>
+                <a href="inquiry.html">Dealer Support</a>
+                <a href="inquiry.html">Distributor Support</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item has-mega">
+        <a href="#partners">Explore</a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-heading">
+              <small>Explore ARC</small>
+              <strong>Brand, product finder and partnership path.</strong>
+              <p>Use this section to connect brand story, product selection and cooperation opportunities.</p>
+              <a class="mega-cta" href="inquiry.html">Become a Dealer or Distributor</a>
+            </div>
+
+            <div class="mega-columns">
+              <div class="mega-col">
+                <h4>Company</h4>
+                <a href="#">About Us</a>
+                <a href="#scenes">Riding Scenes</a>
+                <a href="#technology">Technology</a>
+                <a href="#support">Support</a>
+              </div>
+              <div class="mega-col">
+                <h4>Finders</h4>
+                <a href="#">Find Your Hub</a>
+                <a href="#">Find Your Wheel</a>
+                <a href="#systems">Hub Systems</a>
+                <a href="#systems">Wheel Applications</a>
+              </div>
+              <div class="mega-col">
+                <h4>Business</h4>
+                <a href="inquiry.html">Become a Dealer or Distributor</a>
+                <a href="inquiry.html">OEM Project</a>
+                <a href="inquiry.html">Distributor Inquiry</a>
+                <a href="inquiry.html">Custom Specification</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+    <a class="nav-cta" href="inquiry.html">Start Project</a>
+    <a class="mobile-menu" href="#systems" aria-label="Menu"></a>
+  </header>
+
+  <main id="top">
+    <section class="hero-scroll">
+      <div class="hero-sticky">
+        <div class="hero-bg"></div>
+        <div class="hero-copy">
+          <div class="eyebrow">Outdoor riding × precision hubs</div>
+          <h1><span>Ride</span><span>Every Terrain</span></h1>
+          <p>ARC builds bicycle hub systems for mountain, road, gravel and partner-driven wheel projects. A focused homepage should feel premium, simple and product-led.</p>
+          <div class="btn-row">
+            <a class="btn fill" href="#systems">View Hub Systems</a>
+            <a class="btn" href="#partners">Start A Project</a>
+          </div>
+        </div>
+        <div class="hero-summary">
           <div>
-            <b>0.02<span>mm</span></b>
-            <span>Tolerance</span>
+            <div class="kicker">ARC Positioning</div>
+            <h2>From terrain to hub performance.</h2>
           </div>
           <div>
-            <b>99.4<span>%</span></b>
-            <span>Efficiency</span>
-          </div>
-          <div>
-            <b>180<span>g</span></b>
-            <span>Ultra Light</span>
+            <p>Show the riding context first, then guide visitors into product platforms, engineering details, support and partner communication.</p>
+            <div class="summary-points">
+              <div><b>MTB</b><span>Trail / Boost / Disc</span></div>
+              <div><b>Road</b><span>Climb / Speed</span></div>
+              <div><b>Hub</b><span>Bearing / Freehub / Axle</span></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
-  </div>
 
-  <section id="products" class="product-system">
-    <div class="section-title reveal">
-      <div>
-        <h2>Product System</h2>
+    <section class="tech" id="technology">
+      <div class="tech-photo reveal"></div>
+      <div class="tech-copy reveal">
+        <small>Technology</small>
+        <h2>Make hub engineering visible.</h2>
+        <p>Explain only the core technical value: sealed bearings, freehub compatibility, axle standards, spoke geometry and brake interfaces.</p>
+        <a class="btn" href="#support">View Support</a>
       </div>
-      <p>A structured approach to hub refinement. Built across distinct archetypes to provide perfect mechanical integration whether on elite pavement or heavy trails.</p>
-    </div>
-    <div class="product-grid reveal">
-      <div class="product-card p-hub">
-        <small>Core Component</small>
-        <h3>Precision Hubs</h3>
-        <p>The definitive center of energy transfer, using elite engagement layouts.</p>
-      </div>
-      <div class="product-card p-wheel">
-        <small>Complete Setup</small>
-        <h3>Rhythm Wheels</h3>
-        <p>Hand-stabilized premium rims laced perfectly to our signature hub systems.</p>
-      </div>
-      <div class="product-card p-road">
-        <small>Pure Asphalt</small>
-        <h3>Aero Profiles</h3>
-        <p>Optimized legal width structures tuned for minimal drag ratings.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="tech" class="tech">
-    <div class="tech-photo"></div>
-    <div class="tech-copy reveal">
-      <small>Internal Dynamics</small>
-      <h2>Ratchet Drive</h2>
-      <p>Moving beyond classic pawl systems, our proprietary internal layout engages completely across full face paths simultaneously, multiplying load distributions instantly under high wattage strain.</p>
-      <div>
-        <a href="#support" class="btn">Technical Sheets</a>
+    <section class="scenes" id="scenes">
+      <div class="section-title reveal">
+        <h2>Riding Scenes</h2>
+        <p>Rounded image cards keep the page cleaner while still showing outdoor riding context.</p>
       </div>
-    </div>
-  </section>
+      <div class="scene-grid">
+        <article class="scene-card mtb reveal"><small>Mountain Bike</small><h3>Trail Control</h3><p>Stable support for rough ground, Boost standards and disc brake applications.</p></article>
+        <article class="scene-card road reveal"><small>Road Cycling</small><h3>Climb Efficiency</h3><p>Smooth rotation, clean engagement and refined hub appearance for road wheel builds.</p></article>
+        <article class="scene-card gravel reveal"><small>Gravel</small><h3>Mixed Terrain</h3><p>Durability and compatibility for outdoor riding and changing surfaces.</p></article>
+      </div>
+    </section>
 
-  <section id="scenes" class="scenes">
-    <div class="section-title reveal">
-      <h2>Riding Scenes</h2>
-      <p>Every hub setup goes through extensive real-world terrain logs, validating absolute bearing sealing and response precision across diverse geological conditions.</p>
-    </div>
-    <div class="scene-grid reveal">
-      <div class="scene-card mtb">
-        <small>Enduro / Trail</small>
-        <h3>Mountain</h3>
-        <p>Instant engagement when navigating massive technical climbs.</p>
+    <section class="product-system" id="systems">
+      <div class="section-title reveal">
+        <h2>Hub Systems</h2>
+        <p>Fewer sections, stronger product cards, and clearer product entrances.</p>
       </div>
-      <div class="scene-card road">
-        <small>Criterium / Alpine</small>
-        <h3>Road Race</h3>
-        <p>Minimal mechanical drag to protect crucial energy over long breakaways.</p>
+      <div class="product-grid">
+        <article class="product-card p-hub reveal"><small>01 / MTB Hub</small><h3>Trail Control</h3><p>Boost, disc brake and sealed bearing layouts for demanding terrain.</p></article>
+        <article class="product-card p-wheel reveal"><small>02 / Wheel Detail</small><h3>Build Quality</h3><p>Hub shell, spoke geometry and bearing layout work as a system.</p></article>
+        <article class="product-card p-road reveal"><small>03 / Road Hub</small><h3>Climb Rhythm</h3><p>Smooth rotation and refined appearance for performance wheel builds.</p></article>
       </div>
-      <div class="scene-card gravel">
-        <small>Bikepacking / Mud</small>
-        <h3>Gravel</h3>
-        <p>Robust dual lab sealing pathways built against severe weather elements.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="support" class="support">
-    <div class="support-wrap">
-      <div class="support-intro reveal">
-        <small>Service Hub</small>
-        <h2>Technical Support</h2>
-        <p>We provide absolute maintenance clarity. Access step-by-step strip procedures, custom dimensions, and structural component diagrams.</p>
+    <section class="support" id="support">
+      <div class="support-wrap">
+        <div class="support-intro reveal">
+          <small>Need Support?</small>
+          <h2>Find the right hub standard before you build.</h2>
+          <p>Keep detailed compatibility, manuals and FAQ content on separate support pages. The homepage only needs a clear entry.</p>
+          <a class="btn" href="#">Go To Support Center</a>
+        </div>
+        <div class="support-grid reveal">
+          <a href="#"><span>01</span><strong>Compatibility Guide</strong><em>Axle / O.L.D / brake interface / freehub body</em></a>
+          <a href="#"><span>02</span><strong>Hub Manuals</strong><em>Installation, maintenance and service notes</em></a>
+          <a href="#"><span>03</span><strong>Spare Parts</strong><em>Bearings, end caps, lockrings and freehub bodies</em></a>
+          <a href="#partners"><span>04</span><strong>Project Inquiry</strong><em>Send your required hub specification</em></a>
+        </div>
       </div>
-      <div class="support-grid reveal">
-        <a href="#">
-          <span>Manuals</span>
-          <strong>User Guides</strong>
-          <em>Full rebuild walkthrough steps.</em>
-        </a>
-        <a href="#">
-          <span>Dimensions</span>
-          <strong>Spoke Calculator</strong>
-          <em>Precise spacing geometries.</em>
-        </a>
-        <a href="#">
-          <span>Spares</span>
-          <strong>Small Parts</strong>
-          <em>Seal kits, bearings and drive rings.</em>
-        </a>
-        <a href="#">
-          <span>Warranty</span>
-          <strong>Registration</strong>
-          <em>Secure your lifetime coverage tracking.</em>
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="contact" class="partner">
-    <div class="partner-photo">
-      <div>
-        <small>Global Distribution</small>
-        <strong>Network Hub.</strong>
+    <span id="contact" class="anchor-contact"></span>
+    <section class="partner" id="partners">
+      <div class="partner-photo"><div><small>Partner-ready communication</small><strong>From wheel build to product specification</strong></div></div>
+      
+      <div class="partner-text partner-cta-simple reveal">
+        <small>Partner Inquiry</small>
+        <h2>Build your next wheel project with ARC.</h2>
+        <p>Tell us your riding category, hub standard, brake interface and target market. Our team will help confirm the right product direction.</p>
+        <a class="partner-contact-btn" href="inquiry.html">Send Inquiry</a>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer-dt-arc">
+    <div class="footer-dt-brand">
+      <div class="footer-dt-logo">ARC <span>BIKE HUB</span></div>
+      <p>Precision hub systems for MTB, road, gravel and partner wheel projects.</p>
+    </div>
+
+    <div class="footer-dt-col">
+      <h4>ARC</h4>
+      <a href="#systems">Hub Systems</a>
+      <a href="#technology">Technology</a>
+      <a href="#scenes">Riding Scenes</a>
+      <a href="#support">Support</a>
+    </div>
+
+    <div class="footer-dt-col">
+      <h4>Products</h4>
+      <a href="#">MTB Hubs</a>
+      <a href="#">Road Hubs</a>
+      <a href="#">Gravel Hubs</a>
+      <a href="#">Folding Hubs</a>
+      <a href="#">E-Bike Hubs</a>
+    </div>
+
+    <div class="footer-dt-col">
+      <h4>Support</h4>
+      <a href="#support">Compatibility Guide</a>
+      <a href="#support">Hub Manuals</a>
+      <a href="#support">Spare Parts</a>
+      <a href="inquiry.html">Contact Us</a>
+      <a href="inquiry.html">Project Inquiry</a>
+    </div>
+
+    <div class="footer-dt-col footer-dt-col-partner">
+      <h4>Partners</h4>
+      <a href="inquiry.html">Become a Partner</a>
+      <a href="inquiry.html">Dealer Inquiry</a>
+      <a href="inquiry.html">Distributor Inquiry</a>
+      <a href="inquiry.html">Custom Project</a>
+
+      <div class="footer-dt-social">
+        <h5>Social Media</h5>
+        <div class="footer-dt-social-links">
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="YouTube">YouTube</a>
+          <a href="#" aria-label="Facebook">Facebook</a>
+          <a href="#" aria-label="LinkedIn">LinkedIn</a>
+        </div>
       </div>
     </div>
-    <div class="partner-text partner-cta-simple reveal">
-      <small>B2B Relationships</small>
-      <h2>Become a Partner</h2>
-      <p>We coordinate directly with global premium builders, custom workshops and retailers looking to supply elite tier mechanical performance to clients.</p>
-      <a href="mailto:partner@arcbikehub.com" class="partner-contact-btn">Send Inquiry Email</a>
-    </div>
-  </section>
 
-  <footer>
-    <div>
-      <strong>ARC Bike Hub</strong>
-      <p style="margin:0; opacity:0.7;">Precision hub dynamics engineered without compromise.</p>
-    </div>
-    <div>
-      <strong>Systems</strong>
-      <p style="margin:0; opacity:0.7;">Ratchet Drive<br>Aero Rim Profiles<br>Custom Lacing</p>
-    </div>
-    <div>
-      <strong>Legal</strong>
-      <p style="margin:0; opacity:0.7;">&copy; 2026 ARC Precision Systems.<br>All rights reserved.</p>
+    <div class="footer-dt-bottom">
+      <span>© 2026 ARC Bike Hub. All rights reserved.</span>
+      <div class="footer-dt-bottom-links">
+        <a href="inquiry.html">Inquiry</a>
+        <a href="#top">Back to top</a>
+      </div>
     </div>
   </footer>
 
+
+
   <script>
-    let ticking = false;
-    const root = document.documentElement;
-    const reveals = document.querySelectorAll('.reveal');
+    (function () {
+      const root = document.documentElement;
+      const hero = document.querySelector('.hero-scroll');
+      const reveals = document.querySelectorAll('.reveal');
+      let ticking = false;
 
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateScroll();
-          ticking = false;
+      const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+      const easeOutCubic = x => 1 - Math.pow(1 - x, 3);
+      const easeInOutCubic = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+
+      function updateHero() {
+        if (!hero) return;
+
+        const rect = hero.getBoundingClientRect();
+        const scrollable = Math.max(hero.offsetHeight - window.innerHeight, 1);
+        const p = clamp(-rect.top / scrollable, 0, 1);
+
+        const copyProgress = clamp(p / .42, 0, 1);
+        const missionProgress = easeOutCubic(clamp((p - .42) / .42, 0, 1));
+
+        root.style.setProperty('--p', p.toFixed(4));
+        root.style.setProperty('--topFade', missionProgress.toFixed(4));
+        root.style.setProperty('--hero-cut', '0%');
+        root.style.setProperty('--copy-o', Math.max(0, 1 - easeInOutCubic(copyProgress) * 1.05).toFixed(4));
+        root.style.setProperty('--copy-y', (-54 * easeOutCubic(copyProgress)).toFixed(2) + 'px');
+        root.style.setProperty('--hero-scale', (1 + p * .045).toFixed(4));
+        root.style.setProperty('--hero-y', (-p * 22).toFixed(2) + 'px');
+        root.style.setProperty('--mission-y', ((1 - missionProgress) * 108).toFixed(2) + '%');
+
+        const navActive = p > .04 || window.scrollY > 50;
+        root.style.setProperty('--nav-bg', navActive ? 'rgba(5,5,5,.72)' : 'rgba(5,5,5,0)');
+        root.style.setProperty('--nav-border', navActive ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,0)');
+        root.style.setProperty('--nav-blur', navActive ? '18px' : '0px');
+      }
+
+      function updateReveal() {
+        reveals.forEach(el => {
+          if (el.getBoundingClientRect().top < window.innerHeight * .86) {
+            el.classList.add('visible');
+          }
         });
-        ticking = true;
-      }
-    });
-
-    function updateScroll() {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      
-      // 计算 Hero 区域的进度 (0.00 ~ 1.00)
-      const heroThreshold = windowHeight * 0.85; 
-      let p = Math.min(Math.max(scrollTop / heroThreshold, 0), 1);
-
-      // 1. 视差大背景缩放和平移计算
-      root.style.setProperty('--hero-scale', (1 + p * 0.08).toFixed(4));
-      root.style.setProperty('--hero-y', (-p * 36).toFixed(2) + 'px');
-      
-      // 2. 主视觉文字平移及顺滑淡出 (使用缓动增强质感)
-      let easeOutCopy = Math.pow(p, 1.5);
-      root.style.setProperty('--copy-y', (-76 * easeOutCopy).toFixed(2) + 'px');
-      root.style.setProperty('--copy-o', Math.max(0, 1 - p * 1.25).toFixed(4));
-
-      // 3. 白色区块 (hero-summary) 随着滚动从底部平稳升起
-      // 起始 100% (屏幕外)，随着 p 增加，收缩到 0%
-      let missionY = 100 - (p * 100);
-      root.style.setProperty('--mission-y', missionY.toFixed(2) + '%');
-
-      // 4. 透明度驱动：中后期迅速变为不透明，防止底下背景产生空隙暴露
-      let topFade = Math.min(Math.max((p - 0.15) * 1.2, 0), 1);
-      root.style.setProperty('--topFade', topFade.toFixed(4));
-
-      // 5. 导航栏自适应渐变
-      if (scrollTop > 50) {
-        root.style.setProperty('--nav-bg', 'rgba(5,5,5,.76)');
-        root.style.setProperty('--nav-border', 'rgba(255,255,255,.10)');
-        root.style.setProperty('--nav-blur', '18px');
-      } else {
-        root.style.setProperty('--nav-bg', 'rgba(5,5,5,0)');
-        root.style.setProperty('--nav-border', 'rgba(255,255,255,0)');
-        root.style.setProperty('--nav-blur', '0px');
       }
 
-      // 6. 普通区块元素在视野内时 Reveal 显示
-      reveals.forEach(el => {
-        if (el.getBoundingClientRect().top < windowHeight * 0.88) {
-          el.classList.add('visible');
+      function update() {
+        updateHero();
+        updateReveal();
+        ticking = false;
+      }
+
+      function requestUpdate() {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
         }
-      });
-    }
+      }
 
-    // 初始化一次以矫正页面刷新时的原始位置
-    document.addEventListener("DOMContentLoaded", updateScroll);
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
+      window.addEventListener('load', update);
+      update();
+    })();
   </script>
 </body>
 </html>
