@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARC Wheels | Built for Every Line</title>
+
+  <style>
+    :root {
+      --black: #060606;
+      --dark: #111111;
+      --carbon: #1b1b1b;
+      --gray: #5e6266;
+      --soft: #f5f5f3;
+      --white: #ffffff;
+      --red: #e1251b;
+      --line: rgba(0,0,0,.1);
+      --shadow: 0 24px 60px rgba(0,0,0,.16);
+      --font: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--dark);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      width: 100%;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .section-inner {
+      width: min(1500px, calc(100% - 72px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      width: 100%;
+      height: 82px;
+      background: rgba(255,255,255,.97);
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+    }
+
+    .header-inner {
+      width: min(1540px, calc(100% - 72px));
+      height: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 220px 1fr 180px;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .logo img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 42px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .03em;
+    }
+
+    .main-nav a {
+      position: relative;
+      padding: 30px 0;
+      color: #111;
+    }
+
+    .main-nav a.active::after,
+    .main-nav a:hover::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 17px;
+      width: 42px;
+      height: 2px;
+      background: var(--red);
+      transform: translateX(-50%);
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 20px;
+      color: #111;
+      font-size: 18px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      min-width: 188px;
+      height: 50px;
+      padding: 0 24px;
+      border: 1px solid currentColor;
+      background: transparent;
+      color: inherit;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .09em;
+      transition: .25s ease;
+      cursor: pointer;
+    }
+
+    .btn::after {
+      content: "›";
+      font-size: 23px;
+      line-height: 1;
+      transform: translateY(-1px);
+    }
+
+    .btn:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn.dark {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+      box-shadow: 0 14px 28px rgba(0,0,0,.2);
+    }
+
+    .btn.dark:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    .btn.white {
+      background: #fff;
+      color: #111;
+      border-color: #fff;
+    }
+
+    .btn.white:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .red-line {
+      width: 76px;
+      height: 4px;
+      background: var(--red);
+      margin: 32px 0;
+    }
+
+    /* CSS Wheel Product Visual */
+    .wheel-visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-width: 560px;
+      margin: 0 auto;
+      border-radius: 50%;
+    }
+
+    .wheel-visual::before {
+      content: "";
+      position: absolute;
+      inset: 4%;
+      border-radius: 50%;
+      border: 18px solid #111;
+      box-shadow:
+        inset 0 0 0 5px #2b2b2b,
+        inset 0 0 0 13px #f5f5f5,
+        inset 0 0 0 16px #1b1b1b,
+        0 22px 60px rgba(0,0,0,.18);
+      background:
+        repeating-conic-gradient(
+          from 0deg,
+          rgba(0,0,0,.82) 0deg 1deg,
+          transparent 1deg 12deg
+        );
+    }
+
+    .wheel-visual::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 17%;
+      height: 17%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 28%, #5a5a5a, #111 58%, #050505 100%);
+      box-shadow:
+        0 0 0 8px #232323,
+        0 0 0 13px #e4e4e4,
+        0 0 0 15px #111,
+        0 10px 28px rgba(0,0,0,.32);
+    }
+
+    .wheel-visual .valve {
+      position: absolute;
+      left: 50%;
+      top: 7%;
+      width: 4px;
+      height: 34px;
+      background: var(--red);
+      transform: translateX(-50%);
+      z-index: 3;
+      border-radius: 4px;
+    }
+
+    .wheel-visual .brand {
+      position: absolute;
+      right: 18%;
+      top: 43%;
+      z-index: 4;
+      color: #fff;
+      background: #111;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      transform: rotate(86deg);
+      box-shadow: 0 8px 18px rgba(0,0,0,.25);
+    }
+
+    .wheel-visual.light::before {
+      border-color: #171717;
+      box-shadow:
+        inset 0 0 0 5px #3a3a3a,
+        inset 0 0 0 13px #fff,
+        inset 0 0 0 16px #202020,
+        0 20px 45px rgba(0,0,0,.12);
+    }
+
+    .wheel-visual.deep::before {
+      border-color: #050505;
+      box-shadow:
+        inset 0 0 0 5px #252525,
+        inset 0 0 0 13px #dcdcdc,
+        inset 0 0 0 16px #090909,
+        0 25px 65px rgba(0,0,0,.22);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 820px;
+      padding-top: 82px;
+      position: relative;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.64) 44%, rgba(0,0,0,.18) 100%),
+        url("https://images.unsplash.com/photo-1544191696-102dbdaeeaa3?auto=format&fit=crop&w=2200&q=85") center center / cover no-repeat;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 120px),
+        linear-gradient(135deg, transparent 0 56%, rgba(255,255,255,.1) 56% 60%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 190px;
+      background: linear-gradient(to top, rgba(0,0,0,.88), transparent);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      min-height: 738px;
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .hero-text {
+      width: min(720px, 92%);
+      padding-top: 40px;
+    }
+
+    .hero h1 {
+      font-size: clamp(70px, 9vw, 142px);
+      line-height: .88;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .hero h2 {
+      margin-top: 24px;
+      font-size: clamp(26px, 3vw, 46px);
+      line-height: 1.15;
+      letter-spacing: .05em;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      max-width: 560px;
+      color: rgba(255,255,255,.74);
+      font-size: 17px;
+      margin-bottom: 34px;
+    }
+
+    .hero-product {
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-product::before {
+      content: "";
+      position: absolute;
+      width: 760px;
+      height: 760px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.15);
+      background:
+        radial-gradient(circle, rgba(255,255,255,.12), transparent 55%);
+    }
+
+    .hero-product .wheel-visual {
+      max-width: 560px;
+      z-index: 2;
+      transform: rotate(-8deg);
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,.55));
+    }
+
+    .hero-product .wheel-visual::before {
+      border-color: #050505;
+      box-shadow:
+        inset 0 0 0 5px #363636,
+        inset 0 0 0 13px #e7e7e7,
+        inset 0 0 0 16px #050505,
+        0 30px 70px rgba(0,0,0,.4);
+    }
+
+    .hero-badge {
+      position: absolute;
+      right: 2%;
+      bottom: 14%;
+      z-index: 4;
+      background: rgba(0,0,0,.56);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(12px);
+      padding: 18px 24px;
+      color: #fff;
+    }
+
+    .hero-badge strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .hero-badge span {
+      display: block;
+      color: rgba(255,255,255,.6);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    /* Category nav */
+    .wheel-tabs {
+      width: 100%;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.08), transparent 35%),
+        linear-gradient(135deg, #1a1a1a, #080808);
+      color: var(--white);
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .tabs-inner {
+      width: min(1540px, calc(100% - 36px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+    }
+
+    .tab-item {
+      min-height: 126px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid rgba(255,255,255,.16);
+      gap: 10px;
+      transition: .25s ease;
+      text-align: center;
+    }
+
+    .tab-item:first-child {
+      border-left: 1px solid rgba(255,255,255,.16);
+    }
+
+    .tab-item:hover,
+    .tab-item.is-active {
+      background: rgba(255,255,255,.07);
+    }
+
+    .tab-wheel {
+      width: 38px;
+      height: 38px;
+      border: 4px solid rgba(255,255,255,.82);
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .tab-wheel::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 2px solid rgba(255,255,255,.82);
+      border-radius: 50%;
+    }
+
+    .tab-wheel::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -4px;
+      width: 1px;
+      height: 38px;
+      background: rgba(255,255,255,.7);
+      transform: translateX(-50%);
+    }
+
+    .tab-item span {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tab-item.find {
+      color: var(--red);
+    }
+
+    .tab-item.find .tab-wheel {
+      border-color: var(--red);
+    }
+
+    .tab-item.find .tab-wheel::before {
+      border-color: var(--red);
+    }
+
+    .tab-item.find .tab-wheel::after {
+      background: var(--red);
+    }
+
+    /* Intro */
+    .intro {
+      background: var(--white);
+      padding: 105px 0 78px;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 72px;
+      align-items: end;
+    }
+
+    .intro h2,
+    .section-title {
+      font-size: clamp(42px, 5vw, 78px);
+      line-height: .95;
+      text-transform: uppercase;
+      letter-spacing: .055em;
+      font-weight: 900;
+      color: #121212;
+    }
+
+    .intro p {
+      max-width: 620px;
+      color: #555;
+      font-size: 17px;
+    }
+
+    .intro-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid rgba(0,0,0,.1);
+      background: #f7f7f5;
+      margin-top: 30px;
+    }
+
+    .intro-points div {
+      padding: 26px 24px;
+      border-right: 1px solid rgba(0,0,0,.1);
+    }
+
+    .intro-points div:last-child {
+      border-right: 0;
+    }
+
+    .intro-points strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: .05em;
+    }
+
+    .intro-points span {
+      display: block;
+      margin-top: 6px;
+      color: #666;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 800;
+    }
+
+    /* Product Focus */
+    .product-focus {
+      background: #f4f4f2;
+      padding: 105px 0;
+      overflow: hidden;
+    }
+
+    .focus-grid {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .focus-copy p {
+      max-width: 540px;
+      color: #555;
+      font-size: 17px;
+      margin-top: 24px;
+      margin-bottom: 34px;
+    }
+
+    .focus-stage {
+      background:
+        radial-gradient(circle at 50% 45%, rgba(0,0,0,.1), transparent 34%),
+        linear-gradient(135deg, #fff, #ededeb);
+      min-height: 620px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .focus-stage::before {
+      content: "ARC WHEELS";
+      position: absolute;
+      left: 46px;
+      top: 32px;
+      font-size: clamp(44px, 7vw, 116px);
+      line-height: .9;
+      font-weight: 900;
+      color: rgba(0,0,0,.045);
+      letter-spacing: .08em;
+      z-index: 1;
+    }
+
+    .focus-stage .wheel-visual {
+      z-index: 2;
+      max-width: 430px;
+    }
+
+    .focus-stage .wheel-visual:first-child {
+      transform: translateX(42px) rotate(-6deg);
+    }
+
+    .focus-stage .wheel-visual:last-child {
+      transform: translateX(-42px) rotate(7deg);
+    }
+
+    /* Wheel Families */
+    .wheel-families {
+      padding: 112px 0;
+      background: #fff;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 40px;
+      margin-bottom: 46px;
+    }
+
+    .section-head p {
+      max-width: 560px;
+      color: #626262;
+      font-size: 16px;
+    }
+
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .family-card {
+      background: #fff;
+      min-height: 560px;
+      border: 1px solid rgba(0,0,0,.08);
+      position: relative;
+      overflow: hidden;
+      transition: .28s ease;
+    }
+
+    .family-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .family-top {
+      height: 330px;
+      position: relative;
+      background:
+        linear-gradient(180deg, #fff 0%, #f3f3f1 100%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .family-top::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: var(--scene);
+      background-size: cover;
+      background-position: center;
+      opacity: .22;
+      filter: grayscale(100%);
+    }
+
+    .family-top::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(255,255,255,.92), rgba(255,255,255,.38), rgba(255,255,255,.75));
+    }
+
+    .family-top .wheel-visual {
+      width: 76%;
+      z-index: 3;
+      transform: rotate(var(--rotate));
+    }
+
+    .family-body {
+      padding: 30px 28px 36px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .family-body small {
+      display: inline-block;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-size: 11px;
+    }
+
+    .family-body h3 {
+      font-size: 28px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .family-body p {
+      color: #5e5e5e;
+      font-size: 14px;
+      min-height: 46px;
+    }
+
+    .family-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .family-tags span {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 6px 8px;
+      border: 1px solid rgba(0,0,0,.15);
+      color: #555;
+    }
+
+    .family-link {
+      margin-top: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .family-link::after {
+      content: "›";
+      font-size: 24px;
+      color: var(--red);
+    }
+
+    /* Full Width Showcase */
+    .showcase {
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      min-height: 720px;
+    }
+
+    .showcase-copy {
+      padding: 95px max(46px, calc((100vw - 1480px) / 2));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 18% 15%, rgba(255,255,255,.08), transparent 35%),
+        linear-gradient(145deg, #151515, #050505);
+    }
+
+    .showcase-copy h2 {
+      font-size: clamp(40px, 5vw, 76px);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 900;
+      margin-bottom: 28px;
+    }
+
+    .showcase-copy p {
+      color: rgba(255,255,255,.76);
+      max-width: 570px;
+      font-size: 17px;
+      margin-bottom: 48px;
+    }
+
+    .tech-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(255,255,255,.15);
+      border-bottom: 1px solid rgba(255,255,255,.15);
+      max-width: 630px;
+    }
+
+    .tech-points div {
+      padding: 26px 18px;
+      border-right: 1px solid rgba(255,255,255,.14);
+    }
+
+    .tech-points div:last-child {
+      border-right: none;
+    }
+
+    .tech-points b {
+      display: block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 6px;
+    }
+
+    .tech-points span {
+      color: rgba(255,255,255,.58);
+      font-size: 13px;
+    }
+
+    .showcase-image {
+      min-height: 720px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.6), rgba(0,0,0,.12)),
+        url("https://images.unsplash.com/photo-1502744688674-c619d1586c9e?auto=format&fit=crop&w=1800&q=85") center center / cover no-repeat;
+    }
+
+    .showcase-image::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(520px, 68%);
+      aspect-ratio: 1 / 1;
+      transform: translate(-50%, -50%) rotate(-8deg);
+      border-radius: 50%;
+      border: 22px solid #050505;
+      box-shadow:
+        inset 0 0 0 5px #363636,
+        inset 0 0 0 15px #efefef,
+        inset 0 0 0 19px #070707,
+        0 40px 90px rgba(0,0,0,.62);
+      background:
+        repeating-conic-gradient(
+          from 0deg,
+          rgba(255,255,255,.8) 0deg 1deg,
+          transparent 1deg 12deg
+        );
+    }
+
+    .showcase-image::after {
+      content: "WHEEL SYSTEM";
+      position: absolute;
+      right: 46px;
+      bottom: 40px;
+      color: rgba(255,255,255,.2);
+      font-size: clamp(42px, 6vw, 118px);
+      line-height: .9;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* Ride category */
+    .ride-section {
+      background: #f4f4f2;
+      padding: 110px 0;
+    }
+
+    .ride-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 46px;
+    }
+
+    .ride-card {
+      min-height: 640px;
+      position: relative;
+      overflow: hidden;
+      background: #ddd;
+      color: var(--white);
+      display: flex;
+      align-items: flex-end;
+      box-shadow: var(--shadow);
+    }
+
+    .ride-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.02);
+      transition: .35s ease;
+    }
+
+    .ride-card:hover::before {
+      transform: scale(1.08);
+    }
+
+    .ride-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.2) 55%, rgba(0,0,0,.05)),
+        linear-gradient(120deg, rgba(0,0,0,.48), transparent 50%);
+    }
+
+    .ride-card.gravel::before {
+      background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1300&q=85");
+    }
+
+    .ride-card.road::before {
+      background-image: url("https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1300&q=85");
+    }
+
+    .ride-card.trail::before {
+      background-image: url("https://images.unsplash.com/photo-1575585269294-7d28dd912db8?auto=format&fit=crop&w=1300&q=85");
+    }
+
+    .ride-product {
+      position: absolute;
+      right: -70px;
+      top: 54px;
+      width: 330px;
+      z-index: 2;
+      opacity: .92;
+      filter: drop-shadow(0 25px 40px rgba(0,0,0,.5));
+    }
+
+    .ride-product .wheel-visual {
+      width: 100%;
+    }
+
+    .ride-content {
+      position: relative;
+      z-index: 3;
+      padding: 40px;
+    }
+
+    .ride-content h3 {
+      font-size: 50px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .ride-content p {
+      color: rgba(255,255,255,.78);
+      max-width: 360px;
+      font-size: 15px;
+      margin-bottom: 28px;
+    }
+
+    .ride-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .ride-meta span {
+      display: inline-flex;
+      padding: 7px 11px;
+      border: 1px solid rgba(255,255,255,.28);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    /* Finder */
+    .finder {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88)),
+        url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=80") center bottom / cover no-repeat;
+      padding: 115px 0;
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+
+    .finder-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 78px;
+      align-items: center;
+    }
+
+    .finder h2 {
+      font-size: clamp(42px, 5vw, 74px);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      font-weight: 900;
+      margin-bottom: 26px;
+    }
+
+    .finder p {
+      max-width: 480px;
+      color: #555;
+      font-size: 17px;
+      margin-bottom: 34px;
+    }
+
+    .finder-form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      background: rgba(255,255,255,.7);
+      padding: 34px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.08);
+      backdrop-filter: blur(8px);
+    }
+
+    .field {
+      border-left: 1px solid rgba(0,0,0,.16);
+      padding-left: 24px;
+    }
+
+    .field small {
+      display: block;
+      color: var(--red);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+    }
+
+    .field select {
+      width: 100%;
+      height: 58px;
+      border: 1px solid rgba(0,0,0,.35);
+      background: rgba(255,255,255,.86);
+      padding: 0 18px;
+      font-size: 15px;
+      color: #222;
+      outline: none;
+    }
+
+    /* Footer */
+    .site-footer {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,.08), transparent 34%),
+        linear-gradient(135deg, #171717, #050505);
+      color: var(--white);
+      padding: 76px 0 28px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.35fr repeat(4, 1fr);
+      gap: 50px;
+      padding-bottom: 58px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+
+    .footer-logo img {
+      height: 38px;
+      margin-bottom: 22px;
+    }
+
+    .footer-about p {
+      color: rgba(255,255,255,.65);
+      max-width: 340px;
+      font-size: 14px;
+    }
+
+    .footer-col h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-bottom: 18px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: rgba(255,255,255,.62);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .footer-col a:hover {
+      color: var(--white);
+    }
+
+    .newsletter {
+      display: flex;
+      border: 1px solid rgba(255,255,255,.22);
+      height: 46px;
+      margin-top: 18px;
+    }
+
+    .newsletter input {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      color: var(--white);
+      padding: 0 14px;
+      outline: none;
+      min-width: 0;
+    }
+
+    .newsletter button {
+      width: 48px;
+      border: 0;
+      background: var(--red);
+      color: var(--white);
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .footer-bottom {
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      color: rgba(255,255,255,.5);
+      font-size: 13px;
+    }
+
+    .footer-bottom a {
+      margin-left: 22px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1180px) {
+      .header-inner {
+        grid-template-columns: 180px 1fr 120px;
+      }
+
+      .main-nav {
+        gap: 24px;
+      }
+
+      .tabs-inner {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero-grid,
+      .focus-grid,
+      .showcase,
+      .finder-grid,
+      .intro-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-product {
+        min-height: 500px;
+      }
+
+      .focus-stage {
+        min-height: 560px;
+      }
+
+      .family-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .showcase-image {
+        min-height: 560px;
+      }
+
+      .ride-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .finder-form {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .section-inner,
+      .header-inner {
+        width: calc(100% - 32px);
+      }
+
+      .site-header {
+        height: auto;
+        position: relative;
+      }
+
+      .header-inner {
+        min-height: 74px;
+        grid-template-columns: 1fr auto;
+      }
+
+      .main-nav {
+        grid-column: 1 / -1;
+        order: 3;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 12px;
+      }
+
+      .header-actions {
+        gap: 14px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 0;
+      }
+
+      .hero-grid {
+        min-height: auto;
+        padding: 80px 0 60px;
+      }
+
+      .hero h1 {
+        font-size: 58px;
+      }
+
+      .hero-product {
+        min-height: 360px;
+      }
+
+      .hero-product .wheel-visual {
+        max-width: 330px;
+      }
+
+      .hero-badge {
+        right: 0;
+        bottom: 0;
+      }
+
+      .tabs-inner {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tab-item {
+        min-height: 108px;
+      }
+
+      .intro,
+      .product-focus,
+      .wheel-families,
+      .ride-section,
+      .finder {
+        padding: 70px 0;
+      }
+
+      .intro-points,
+      .family-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-head p {
+        margin-top: 18px;
+      }
+
+      .focus-stage {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 50px 0;
+        gap: 30px;
+      }
+
+      .focus-stage .wheel-visual {
+        max-width: 310px;
+      }
+
+      .focus-stage .wheel-visual:first-child,
+      .focus-stage .wheel-visual:last-child {
+        transform: none;
+      }
+
+      .showcase-copy {
+        padding: 70px 24px;
+      }
+
+      .tech-points {
+        grid-template-columns: 1fr;
+      }
+
+      .tech-points div {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255,255,255,.14);
+      }
+
+      .ride-content {
+        padding: 30px;
+      }
+
+      .ride-content h3 {
+        font-size: 40px;
+      }
+
+      .ride-product {
+        width: 250px;
+        right: -70px;
+        top: 40px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
+
+      .footer-bottom a {
+        margin-left: 0;
+        margin-right: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="logo" href="#">
+          <img src="https://arc.mrsxiao.com/wp-content/uploads/2026/05/logo.png" alt="ARC Logo">
+        </a>
+
+        <nav class="main-nav">
+          <a href="#">Home</a>
+          <a href="#">Hubs</a>
+          <a class="active" href="#">Wheels</a>
+          <a href="#">Support</a>
+          <a href="#">Explore</a>
+        </nav>
+
+        <div class="header-actions" aria-label="Header actions">
+          <span>⌕</span>
+          <span>♙</span>
+          <span>🛒</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="section-inner hero-grid">
+        <div class="hero-text">
+          <div class="eyebrow">ARC Wheels</div>
+          <h1>Wheels</h1>
+          <h2>Built for Every Line</h2>
+          <div class="red-line"></div>
+          <p>
+            Full wheel systems for mountain, gravel and road riding.
+            Built around control, strength and reliable performance across real terrain.
+          </p>
+          <a href="#families" class="btn white">Explore Wheels</a>
+        </div>
+
+        <div class="hero-product">
+          <div class="wheel-visual deep">
+            <i class="valve"></i>
+            <b class="brand">ARC</b>
+          </div>
+
+          <div class="hero-badge">
+            <strong>700C / 29"</strong>
+            <span>Wheel Platform</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Secondary Navigation -->
+    <section class="wheel-tabs">
+      <div class="tabs-inner">
+        <a class="tab-item" href="#all-mountain">
+          <i class="tab-wheel"></i>
+          <span>All Mountain</span>
+        </a>
+        <a class="tab-item" href="#cross-country">
+          <i class="tab-wheel"></i>
+          <span>Cross Country</span>
+        </a>
+        <a class="tab-item" href="#enduro">
+          <i class="tab-wheel"></i>
+          <span>Enduro</span>
+        </a>
+        <a class="tab-item" href="#dirt-jump">
+          <i class="tab-wheel"></i>
+          <span>Dirt Jump</span>
+        </a>
+        <a class="tab-item" href="#downhill">
+          <i class="tab-wheel"></i>
+          <span>Downhill</span>
+        </a>
+        <a class="tab-item" href="#gravel">
+          <i class="tab-wheel"></i>
+          <span>Gravel</span>
+        </a>
+        <a class="tab-item" href="#road">
+          <i class="tab-wheel"></i>
+          <span>Road</span>
+        </a>
+        <a class="tab-item" href="#trail">
+          <i class="tab-wheel"></i>
+          <span>Trail</span>
+        </a>
+        <a class="tab-item find" href="#find-your-wheel">
+          <i class="tab-wheel"></i>
+          <span>Find Your Wheel</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="intro">
+      <div class="section-inner intro-grid">
+        <div>
+          <div class="eyebrow">Wheel System</div>
+          <h2>Built around the complete wheel.</h2>
+        </div>
+        <div>
+          <p>
+            This page now gives wheel products a stronger visual position.
+            Riding scenes are used as supporting context, while the complete wheel remains the main focus.
+          </p>
+
+          <div class="intro-points">
+            <div>
+              <strong>09</strong>
+              <span>Wheel paths</span>
+            </div>
+            <div>
+              <strong>MTB</strong>
+              <span>Trail to downhill</span>
+            </div>
+            <div>
+              <strong>ROAD</strong>
+              <span>Gravel and speed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Focus -->
+    <section class="product-focus">
+      <div class="section-inner focus-grid">
+        <div class="focus-copy">
+          <div class="eyebrow">Product First</div>
+          <h2 class="section-title">Complete wheel presentation.</h2>
+          <p>
+            This section is designed for a full-width product showcase.
+            You can later replace the CSS wheel illustration with real ARC wheelset photos on white background.
+          </p>
+          <a href="#families" class="btn dark">View Categories</a>
+        </div>
+
+        <div class="focus-stage">
+          <div class="wheel-visual light">
+            <i class="valve"></i>
+            <b class="brand">ARC</b>
+          </div>
+          <div class="wheel-visual deep">
+            <i class="valve"></i>
+            <b class="brand">ARC</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wheel Families -->
+    <section class="wheel-families" id="families">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Wheel Families</div>
+            <h2 class="section-title">Choose your wheel.</h2>
+          </div>
+          <p>
+            Each category combines one complete wheel visual with a supporting riding scene,
+            making the page suitable for product navigation and brand display.
+          </p>
+        </div>
+
+        <div class="family-grid">
+
+          <article class="family-card" id="all-mountain">
+            <div class="family-top" style="--scene:url('https://images.unsplash.com/photo-1621627106922-59d843b4d482?auto=format&fit=crop&w=900&q=85'); --rotate:-7deg;">
+              <div class="wheel-visual light">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="family-body">
+              <small>01 / Wheelset</small>
+              <h3>All Mountain</h3>
+              <p>Balanced strength and control for riders moving across mixed trail conditions.</p>
+              <div class="family-tags">
+                <span>Mixed Trail</span>
+                <span>Control</span>
+                <span>All-Round</span>
+              </div>
+              <a class="family-link" href="#">Explore</a>
+            </div>
+          </article>
+
+          <article class="family-card" id="cross-country">
+            <div class="family-top" style="--scene:url('https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=900&q=85'); --rotate:5deg;">
+              <div class="wheel-visual">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="family-body">
+              <small>02 / Wheelset</small>
+              <h3>Cross Country</h3>
+              <p>Light, efficient and responsive for riders focused on speed and climbing.</p>
+              <div class="family-tags">
+                <span>Climbing</span>
+                <span>Speed</span>
+                <span>Efficient</span>
+              </div>
+              <a class="family-link" href="#">Explore</a>
+            </div>
+          </article>
+
+          <article class="family-card" id="enduro">
+            <div class="family-top" style="--scene:url('https://images.unsplash.com/photo-1599935447067-5531094415d1?auto=format&fit=crop&w=900&q=85'); --rotate:-4deg;">
+              <div class="wheel-visual deep">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="family-body">
+              <small>03 / Wheelset</small>
+              <h3>Enduro</h3>
+              <p>Built for rough terrain, aggressive riding and repeated impacts.</p>
+              <div class="family-tags">
+                <span>Impact</span>
+                <span>Technical</span>
+                <span>Stable</span>
+              </div>
+              <a class="family-link" href="#">Explore</a>
+            </div>
+          </article>
+
+          <article class="family-card" id="dirt-jump">
+            <div class="family-top" style="--scene:url('https://images.unsplash.com/photo-1571333250630-f0230c320b6d?auto=format&fit=crop&w=900&q=85'); --rotate:7deg;">
+              <div class="wheel-visual">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="family-body">
+              <small>04 / Wheelset</small>
+              <h3>Dirt Jump</h3>
+              <p>Compact strength for pump tracks, jumps and high-impact landings.</p>
+              <div class="family-tags">
+                <span>Jump</span>
+                <span>Urban</span>
+                <span>Strong</span>
+              </div>
+              <a class="family-link" href="#">Explore</a>
+            </div>
+          </article>
+
+          <article class="family-card" id="downhill">
+            <div class="family-top" style="--scene:url('https://images.unsplash.com/photo-1511994298241-608e28f14fde?auto=format&fit=crop&w=900&q=85'); --rotate:-6deg;">
+              <div class="wheel-visual deep">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="family-body">
+              <small>05 / Wheelset</small>
+              <h3>Downhill</h3>
+              <p>Maximum support for steep lines, heavy hits and technical descents.</p>
+              <div class="family-tags">
+                <span>Gravity</span>
+                <span>Heavy Hit</span>
+                <span>Bike Park</span>
+              </div>
+              <a class="family-link" href="#">Explore</a>
+            </div>
+          </article>
+
+          <article class="family-card" id="gravel">
+            <div class="family-top" style="--scene:url('https://images.unsplash.com/photo-1502744688674-c619d1586c9e?auto=format&fit=crop&w=900&q=85'); --rotate:4deg;">
+              <div class="wheel-visual light">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="family-body">
+              <small>06 / Wheelset</small>
+              <h3>Gravel</h3>
+              <p>Stable and efficient for mixed surfaces, distance rides and exploration.</p>
+              <div class="family-tags">
+                <span>Mixed Surface</span>
+                <span>Adventure</span>
+                <span>Distance</span>
+              </div>
+              <a class="family-link" href="#">Explore</a>
+            </div>
+          </article>
+
+          <article class="family-card" id="road">
+            <div class="family-top" style="--scene:url('https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=900&q=85'); --rotate:-3deg;">
+              <div class="wheel-visual">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="family-body">
+              <small>07 / Wheelset</small>
+              <h3>Road</h3>
+              <p>Fast rolling performance for clean pavement, climbing and endurance rides.</p>
+              <div class="family-tags">
+                <span>Speed</span>
+                <span>Climbing</span>
+                <span>Endurance</span>
+              </div>
+              <a class="family-link" href="#">Explore</a>
+            </div>
+          </article>
+
+          <article class="family-card" id="trail">
+            <div class="family-top" style="--scene:url('https://images.unsplash.com/photo-1575585269294-7d28dd912db8?auto=format&fit=crop&w=900&q=85'); --rotate:6deg;">
+              <div class="wheel-visual light">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="family-body">
+              <small>08 / Wheelset</small>
+              <h3>Trail</h3>
+              <p>Confident all-round handling for everyday mountain riding and technical trails.</p>
+              <div class="family-tags">
+                <span>Trail</span>
+                <span>Control</span>
+                <span>Daily Ride</span>
+              </div>
+              <a class="family-link" href="#">Explore</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology -->
+    <section class="showcase">
+      <div class="showcase-copy">
+        <div class="eyebrow">Precision Built</div>
+        <h2>Wheel performance starts from the system.</h2>
+        <div class="red-line"></div>
+        <p>
+          Rim profile, spoke tension, hub interface and overall wheel balance work together
+          to support control, response and durability in real riding conditions.
+        </p>
+
+        <div class="tech-points">
+          <div>
+            <b>Stiffness</b>
+            <span>Stable tracking under load.</span>
+          </div>
+          <div>
+            <b>Response</b>
+            <span>Efficient power transfer.</span>
+          </div>
+          <div>
+            <b>Durability</b>
+            <span>Built for repeated riding.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase-image" aria-label="ARC wheel system showcase"></div>
+    </section>
+
+    <!-- Ride Style Cards -->
+    <section class="ride-section">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Ride Direction</div>
+            <h2 class="section-title">Scene plus wheel.</h2>
+          </div>
+          <p>
+            The scene cards keep the European and North American riding atmosphere,
+            while the wheel product stays visible in every major visual block.
+          </p>
+        </div>
+
+        <div class="ride-grid">
+          <article class="ride-card gravel">
+            <div class="ride-product">
+              <div class="wheel-visual light">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="ride-content">
+              <h3>Gravel</h3>
+              <p>For mixed surfaces, long days and routes that move between pavement and dirt.</p>
+              <div class="ride-meta">
+                <span>Mixed Surface</span>
+                <span>Adventure</span>
+                <span>Stability</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="ride-card road">
+            <div class="ride-product">
+              <div class="wheel-visual">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="ride-content">
+              <h3>Road</h3>
+              <p>For speed, clean rolling efficiency and responsive handling on paved routes.</p>
+              <div class="ride-meta">
+                <span>Speed</span>
+                <span>Climbing</span>
+                <span>Endurance</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="ride-card trail">
+            <div class="ride-product">
+              <div class="wheel-visual deep">
+                <i class="valve"></i>
+                <b class="brand">ARC</b>
+              </div>
+            </div>
+            <div class="ride-content">
+              <h3>Trail</h3>
+              <p>For confident control across rocks, roots, switchbacks and changing terrain.</p>
+              <div class="ride-meta">
+                <span>Control</span>
+                <span>Technical</span>
+                <span>All-Round</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Find Your Wheel -->
+    <section class="finder" id="find-your-wheel">
+      <div class="section-inner finder-grid">
+        <div>
+          <div class="eyebrow">Find Your Wheel</div>
+          <h2>Dial in your wheel.</h2>
+          <p>
+            Guide visitors toward the right wheel family based on riding style,
+            terrain and surface. This section can later connect to product filters or inquiry forms.
+          </p>
+          <a href="#" class="btn dark">Get Started</a>
+        </div>
+
+        <form class="finder-form">
+          <div class="field">
+            <small>01</small>
+            <label for="style">What do you ride?</label>
+            <select id="style">
+              <option>Select Style</option>
+              <option>Mountain</option>
+              <option>Gravel</option>
+              <option>Road</option>
+              <option>Trail</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <small>02</small>
+            <label for="terrain">Where do you ride?</label>
+            <select id="terrain">
+              <option>Select Terrain</option>
+              <option>Rocky Trail</option>
+              <option>Forest Trail</option>
+              <option>Mixed Gravel</option>
+              <option>Paved Road</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <small>03</small>
+            <label for="surface">Surface type</label>
+            <select id="surface">
+              <option>Select Surface</option>
+              <option>Loose</option>
+              <option>Hardpack</option>
+              <option>Wet</option>
+              <option>Mixed</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="section-inner">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <a class="footer-logo" href="#">
+              <img src="https://arc.mrsxiao.com/wp-content/uploads/2026/05/logo.png" alt="ARC Logo">
+            </a>
+            <p>
+              Purpose-built bicycle wheel systems and components for riders who demand control,
+              confidence and reliable performance across changing terrain.
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h4>Products</h4>
+            <a href="#">Hubs</a>
+            <a href="#">Wheels</a>
+            <a href="#">Freehub Body</a>
+            <a href="#">Accessories</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>Wheels</h4>
+            <a href="#">All Mountain</a>
+            <a href="#">Cross Country</a>
+            <a href="#">Enduro</a>
+            <a href="#">Gravel</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>Support</h4>
+            <a href="#">Manuals</a>
+            <a href="#">Service Videos</a>
+            <a href="#">Warranty</a>
+            <a href="#">FAQ</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>Stay in the loop</h4>
+            <p style="color:rgba(255,255,255,.62);font-size:14px;">
+              Get updates on ARC wheels, support resources and riding stories.
+            </p>
+            <div class="newsletter">
+              <input type="email" placeholder="Enter your email">
+              <button type="button">›</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div>© 2026 ARC Components. All rights reserved.</div>
+          <div>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const header = document.querySelector('.site-header');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        header.style.boxShadow = '0 12px 35px rgba(0,0,0,.08)';
+      } else {
+        header.style.boxShadow = 'none';
+      }
+    });
+
+    document.querySelectorAll('.tab-item').forEach(item => {
+      item.addEventListener('click', function () {
+        document.querySelectorAll('.tab-item').forEach(i => i.classList.remove('is-active'));
+        this.classList.add('is-active');
+      });
+    });
+  </script>
+</body>
+</html>
