@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARC Hubs | Precision Bicycle Hub Systems</title>
+  <meta name="description" content="ARC Hubs page for disc hubs, road hubs, folding bike hubs, fixed gear hubs, BMX hubs, internal geared hubs, partner hubs, QR, freehub body and hub selection." />
+  <style>
+    :root{
+      --black:#050505;
+      --deep:#0b0b0b;
+      --ink:#151515;
+      --text:#1d1d1f;
+      --muted:#666;
+      --line:#e8e8e8;
+      --soft:#f4f4f2;
+      --white:#fff;
+      --accent:#e53935;
+      --accent2:#2563eb;
+      --radius:26px;
+      --radius-lg:42px;
+      --max:100%;
+      --page-pad:clamp(20px,4vw,76px);
+      --shadow:0 24px 70px rgba(0,0,0,.11);
+      --accent-blue:#2563eb;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:#fff;
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    button,input,select,textarea{font:inherit}
+    ::selection{background:#222;color:#fff}
+
+    .container{width:100%;max-width:none;margin:0;padding-left:var(--page-pad);padding-right:var(--page-pad)}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:#777;
+      font-weight:700;
+    }
+    .eyebrow:before{
+      content:"";
+      width:30px;
+      height:2px;
+      background:currentColor;
+      display:inline-block;
+    }
+    .section-title{font-size:clamp(34px,4vw,62px);line-height:.96;letter-spacing:-.05em;font-weight:850;margin-top:20px}
+    .section-lead{max-width:680px;color:#666;font-size:17px;margin-top:22px}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:40px;
+      padding:0 18px;
+      border-radius:999px;
+      background:#111;
+      color:#fff;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-weight:800;
+      border:0;
+      cursor:pointer;
+      transition:.25s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-2px);background:#000}
+    .btn.light{background:#fff;color:#111}
+    .btn.ghost{background:rgba(255,255,255,.1);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+    .btn.accent{background:var(--accent);color:#fff}
+    .btn.small{min-height:34px;padding:0 14px;font-size:11px}
+
+    /* Header: aligned with confirmed homepage style */
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(5,5,5,.94);
+      color:#fff;
+      backdrop-filter:blur(18px);
+    }
+    .nav-wrap{
+      width:100%;
+      height:76px;
+      margin:0;
+      padding-left:var(--page-pad);
+      padding-right:var(--page-pad);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:13px;
+      min-width:160px;
+    }
+    .brand-logo{
+      display:block;
+      width:auto;
+      height:40px;
+      max-width:188px;
+      object-fit:contain;
+    }
+    .brand-mark{
+      width:42px;height:42px;border-radius:50%;
+      background:radial-gradient(circle at 35% 30%,#fff 0 6px,#777 7px 8px,transparent 9px),
+        conic-gradient(from 45deg,#fff,#8a8a8a,#fff,#202020,#fff);
+      position:relative;
+      box-shadow:0 0 0 1px rgba(255,255,255,.18) inset;
+    }
+    .brand-mark:after{
+      content:"";position:absolute;inset:13px;border-radius:50%;background:#050505;box-shadow:0 0 0 1px rgba(255,255,255,.35) inset;
+    }
+    .brand b{display:block;font-size:15px;letter-spacing:.18em;line-height:1;text-transform:uppercase}
+    .brand span{display:block;font-size:10px;color:#999;letter-spacing:.18em;margin-top:4px;text-transform:uppercase}
+    .nav{display:flex;align-items:center;gap:4px;height:100%}
+    .nav-item{height:100%;display:flex;align-items:center}
+    .nav-link{
+      height:100%;
+      display:flex;
+      align-items:center;
+      padding:0 15px;
+      color:#cfcfcf;
+      font-size:13px;
+      letter-spacing:.03em;
+      transition:.2s ease;
+      position:relative;
+    }
+    .nav-link:hover,.nav-link.active{color:#fff}
+    .nav-link.active:after{
+      content:"";
+      position:absolute;
+      left:16px;right:16px;bottom:18px;height:2px;background:#fff;
+    }
+    .nav-actions{display:flex;align-items:center;gap:12px}
+    .menu-toggle{display:none;background:transparent;color:#fff;border:0;font-size:26px;line-height:1;cursor:pointer}
+
+    .mega-panel{
+      position:absolute;
+      top:76px;
+      left:0;
+      right:0;
+      background:#080808;
+      color:#fff;
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      transform:translateY(10px);
+      transition:.22s ease;
+      box-shadow:0 34px 80px rgba(0,0,0,.45);
+    }
+    .nav-item:hover .mega-panel{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+    .mega-inner{
+      width:100%;
+      margin:0;
+      padding:34px var(--page-pad) 38px;
+      display:grid;
+      grid-template-columns:1.05fr 2fr;
+      gap:46px;
+    }
+    .mega-intro .kicker{font-size:12px;text-transform:uppercase;letter-spacing:.18em;color:#aaa;font-weight:800}
+    .mega-intro h3{font-size:34px;line-height:1;letter-spacing:-.04em;margin:12px 0}
+    .mega-intro p{color:#9d9d9d;max-width:390px;font-size:14px}
+    .mega-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+    .mega-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:#777;margin-bottom:12px}
+    .mega-col a{display:block;color:#d9d9d9;font-size:14px;padding:7px 0;transition:.2s ease}
+    .mega-col a:hover{color:#fff;transform:translateX(4px)}
+
+    /* Page hero */
+    .hubs-hero{
+      min-height:clamp(720px,calc(100vh - 76px),960px);
+      background:#050505;
+      color:#fff;
+      position:relative;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .hero-bg-img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      pointer-events:none;
+      user-select:none;
+    }
+    .hero-bg-blur{
+      object-fit:cover;
+      object-position:center center;
+      filter:blur(18px);
+      transform:scale(1.08);
+      opacity:.48;
+    }
+    .hero-bg-main{
+      object-fit:contain;
+      object-position:center center;
+      opacity:.96;
+      padding:0;
+    }
+    .hubs-hero:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg,rgba(0,0,0,.90) 0%,rgba(0,0,0,.68) 30%,rgba(0,0,0,.18) 64%,rgba(0,0,0,.06) 100%),
+        linear-gradient(180deg,rgba(0,0,0,.20) 0%,rgba(0,0,0,.04) 54%,rgba(0,0,0,.30) 100%);
+      z-index:1;
+      pointer-events:none;
+    }
+    .hubs-hero:after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-1px;
+      height:170px;
+      background:#fff;
+      clip-path:polygon(0 72%,100% 34%,100% 100%,0 100%);
+      pointer-events:none;
+      z-index:2;
+    }
+    .hubs-hero .container{
+      position:relative;
+      z-index:3;
+      display:block;
+      padding:112px var(--page-pad) 190px;
+    }
+    .hero-copy{max-width:690px;position:relative}
+    .hero-copy:before{content:"";position:absolute;inset:-28px -34px;border-radius:32px;background:linear-gradient(90deg,rgba(0,0,0,.36),rgba(0,0,0,0));z-index:-1}
+    .hero-copy .eyebrow{color:#d7d7d7}
+    .hero-copy h1{
+      font-size:clamp(58px,8vw,118px);
+      line-height:.84;
+      letter-spacing:-.08em;
+      font-weight:900;
+      margin:24px 0;
+    }
+    .hero-copy p{
+      color:#d7d7d7;
+      max-width:620px;
+      font-size:18px;
+      line-height:1.72;
+    }
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:46px;
+      max-width:620px;
+    }
+    .hero-stat{
+      min-height:104px;
+      padding:20px;
+      border-radius:22px;
+      background:rgba(255,255,255,.09);
+      backdrop-filter:blur(8px);
+    }
+    .hero-stat b{display:block;font-size:24px;letter-spacing:-.03em}
+    .hero-stat span{display:block;color:#bcbcbc;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-top:6px}
+
+    .hero-product{
+      background:rgba(255,255,255,.94);
+      color:#111;
+      border-radius:var(--radius-lg);
+      padding:38px 30px 28px;
+      box-shadow:0 35px 90px rgba(0,0,0,.28);
+      position:relative;
+      transform:rotate(-2.4deg);
+    }
+    .hero-product:before{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:32px;
+      background:linear-gradient(140deg,#f8f8f8,#fff);
+      z-index:-1;
+    }
+    .product-kicker{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#777;font-weight:800}
+    .hero-product h2{font-size:34px;letter-spacing:-.05em;line-height:1;margin-top:8px}
+    .hero-product p{font-size:13px;color:#666;margin-top:10px}
+    .hero-hub{margin:24px auto 14px;width:min(400px,100%)}
+    .spec-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+    .spec-chips span{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:#111;color:#fff;border-radius:999px;padding:7px 10px}
+
+    /* Sticky category rail */
+    .hubs-rail{
+      position:sticky;
+      top:76px;
+      z-index:80;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(15px);
+      border-bottom:1px solid rgba(0,0,0,.06);
+      overflow-x:auto;
+    }
+    .rail-inner{
+      width:100%;
+      margin:0;
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      padding:14px var(--page-pad);
+    }
+    .rail-inner a{
+      display:inline-flex;
+      align-items:center;
+      height:34px;
+      padding:0 13px;
+      border-radius:999px;
+      background:#f1f1ef;
+      color:#222;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+      transition:.2s ease;
+    }
+    .rail-inner a:hover{background:#111;color:#fff}
+
+    /* Category overview */
+    .category-overview{padding:108px 0 82px;background:#fff;width:100%}
+    .overview-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:42px}
+    .overview-head .section-title{max-width:760px}
+    .category-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+    .category-card{
+      min-height:318px;
+      background:#fff;
+      border-radius:30px;
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 15px 50px rgba(0,0,0,.07);
+      transition:.3s ease;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .category-card:hover{transform:translateY(-6px);box-shadow:0 26px 72px rgba(0,0,0,.12)}
+    .category-card.featured{grid-column:span 2;background:#101010;color:#fff}
+    .category-card.featured p{color:#cfcfcf}
+    .cat-top{position:relative;z-index:2}
+    .cat-no{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#999;font-weight:800}
+    .category-card h3{font-size:28px;line-height:1;letter-spacing:-.04em;margin:12px 0 12px}
+    .category-card p{font-size:14px;color:#666;max-width:420px}
+    .cat-tags{display:flex;gap:7px;flex-wrap:wrap;position:relative;z-index:2;margin-top:20px}
+    .cat-tags span{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:900;background:#f0f0ef;border-radius:999px;padding:7px 9px;color:#222}
+    .featured .cat-tags span{background:rgba(255,255,255,.12);color:#fff}
+    .cat-visual{height:150px;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;margin-top:12px}
+    .cat-visual svg{width:100%;max-width:240px;height:auto;filter:drop-shadow(0 24px 28px rgba(0,0,0,.16))}
+    .category-card.featured .cat-visual svg{max-width:360px;filter:drop-shadow(0 28px 38px rgba(0,0,0,.45))}
+    .category-card:after{
+      content:"";position:absolute;right:-70px;bottom:-70px;width:180px;height:180px;border-radius:50%;background:#f2f2f0;z-index:0;
+    }
+    .category-card.featured:after{background:radial-gradient(circle,#333,transparent 70%)}
+
+    /* Platform section */
+    .platforms{background:#f4f4f2;padding:100px 0}
+    .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px}
+    .platform-card{
+      min-height:430px;
+      border-radius:38px;
+      overflow:hidden;
+      background:#fff;
+      position:relative;
+      box-shadow:var(--shadow);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+    }
+    .platform-card.wide{grid-column:1/-1;grid-template-columns:1fr 1.2fr;min-height:500px;background:#0b0b0b;color:#fff}
+    .platform-media{background:#fff;display:flex;align-items:center;justify-content:center;padding:32px;position:relative;overflow:hidden}
+    .platform-media.dark{background:linear-gradient(135deg,#161616,#070707)}
+    .platform-media svg{width:100%;max-width:370px;filter:drop-shadow(0 30px 35px rgba(0,0,0,.2))}
+    .platform-content{padding:42px;display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+    .platform-content h3{font-size:42px;line-height:.94;letter-spacing:-.055em;margin-top:12px}
+    .platform-content p{color:#666;font-size:15px;margin-top:16px;max-width:480px}
+    .wide .platform-content p{color:#cfcfcf}
+    .feature-list{display:grid;gap:12px;margin-top:22px}
+    .feature-list li{list-style:none;display:flex;gap:11px;color:#555;font-size:14px}
+    .wide .feature-list li{color:#ddd}
+    .feature-list li:before{content:"";width:7px;height:7px;background:#111;border-radius:50%;margin-top:8px;flex:0 0 7px}
+    .wide .feature-list li:before{background:var(--accent)}
+    .platform-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .metric{background:#f3f3f1;border-radius:18px;padding:15px}
+    .wide .metric{background:rgba(255,255,255,.09)}
+    .metric b{display:block;font-size:18px;letter-spacing:-.03em}
+    .metric span{font-size:11px;color:#777;letter-spacing:.1em;text-transform:uppercase;font-weight:800}
+    .wide .metric span{color:#aaa}
+
+    /* Specification table */
+    .spec-section{padding:108px 0;background:#fff;width:100%}
+    .spec-layout{display:grid;grid-template-columns:minmax(320px,.72fr) minmax(760px,1.5fr);gap:46px;align-items:start}
+    .spec-panel{
+      background:#111;color:#fff;border-radius:36px;padding:38px;position:sticky;top:150px;overflow:hidden;
+    }
+    .spec-panel:after{content:"";position:absolute;right:-90px;bottom:-90px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.32),transparent 70%)}
+    .spec-panel h2{font-size:46px;line-height:.95;letter-spacing:-.05em;margin-top:18px;position:relative;z-index:2}
+    .spec-panel p{color:#cfcfcf;margin-top:18px;position:relative;z-index:2}
+    .spec-table{background:#f5f5f3;border-radius:36px;padding:18px;overflow:hidden}
+    .spec-row{display:grid;grid-template-columns:1.05fr 1fr 1fr 1fr;gap:1px;margin-bottom:1px}
+    .spec-cell{background:#fff;padding:20px;min-height:86px;display:flex;align-items:center;color:#555;font-size:14px}
+    .spec-cell.head{background:#101010;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.13em;font-weight:900;min-height:54px}
+    .spec-cell.name{font-weight:850;color:#111;font-size:16px}
+    .spec-note{color:#777;font-size:13px;margin-top:16px;padding:0 8px}
+
+    /* Rider section with European/US style cycling people */
+    .rider-section{padding:102px 0;background:#0a0a0a;color:#fff;position:relative;overflow:hidden}
+    .rider-section:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.11),transparent 28%),radial-gradient(circle at 78% 60%,rgba(37,99,235,.16),transparent 30%)}
+    .rider-section .container{position:relative;z-index:2}
+    .rider-head{display:grid;grid-template-columns:1fr .85fr;gap:50px;align-items:end;margin-bottom:42px}
+    .rider-head .section-lead{color:#cfcfcf}
+    .rider-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:22px}
+    .rider-photo{
+      min-height:560px;border-radius:42px;overflow:hidden;position:relative;background:#222;
+      box-shadow:0 34px 100px rgba(0,0,0,.38);
+    }
+    .rider-photo:before{
+      content:"";position:absolute;inset:0;background:
+        linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.68)),
+        url('https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1600&q=82') center/cover no-repeat;
+    }
+    .rider-caption{position:absolute;left:34px;right:34px;bottom:32px;z-index:2;display:flex;justify-content:space-between;gap:22px;align-items:end}
+    .rider-caption h3{font-size:42px;line-height:.95;letter-spacing:-.05em;max-width:460px}
+    .rider-caption p{color:#ddd;max-width:340px;font-size:14px}
+    .rider-side{display:grid;gap:22px}
+    .rider-mini{
+      min-height:269px;border-radius:38px;overflow:hidden;position:relative;background:#181818;padding:30px;display:flex;flex-direction:column;justify-content:end;
+    }
+    .rider-mini:before{content:"";position:absolute;inset:0;opacity:.72;background:center/cover no-repeat;transition:.4s ease}
+    .rider-mini:hover:before{transform:scale(1.05)}
+    .rider-mini:nth-child(1):before{background-image:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.76)),url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=82')}
+    .rider-mini:nth-child(2):before{background-image:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.76)),url('https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?auto=format&fit=crop&w=1000&q=82')}
+    .rider-mini h4,.rider-mini p{position:relative;z-index:2}
+    .rider-mini h4{font-size:28px;line-height:1;letter-spacing:-.04em}
+    .rider-mini p{color:#d7d7d7;margin-top:10px;font-size:14px}
+
+    /* Hub finder */
+    .finder{padding:110px 0;background:#fff;width:100%}
+    .finder-box{
+      border-radius:44px;
+      background:linear-gradient(135deg,#f7f7f6 0%,#ffffff 58%,#eef4ff 100%);
+      padding:42px;
+      box-shadow:var(--shadow);
+      width:100%;
+      border:1px solid rgba(0,0,0,.045);
+    }
+    .finder-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:30px}
+    .finder-head h2{font-size:54px;line-height:.92;letter-spacing:-.055em;max-width:660px}
+    .finder-head .btn{background:var(--accent2);color:#fff}
+    .finder-head .btn:hover{background:#174fc3}
+    .finder-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .finder-field{background:#fff;border-radius:24px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,.045);border:1px solid rgba(0,0,0,.04)}
+    .finder-field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:#777;margin-bottom:10px}
+    .finder-field select,.finder-field input{
+      width:100%;height:44px;border:0;background:#f4f4f2;border-radius:15px;padding:0 14px;color:#111;outline:0;
+    }
+    .finder-result{
+      margin-top:16px;
+      border-radius:28px;
+      background:linear-gradient(135deg,#ffffff 0%,#f8f9fb 50%,#eef4ff 100%);
+      color:#111;
+      padding:28px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:24px;
+      align-items:center;
+      border:1px solid rgba(37,99,235,.18);
+      box-shadow:0 18px 48px rgba(37,99,235,.10);
+      position:relative;
+      overflow:hidden;
+    }
+    .finder-result:before{content:"";position:absolute;left:0;top:24px;bottom:24px;width:5px;border-radius:999px;background:linear-gradient(180deg,var(--accent),var(--accent2))}
+    .finder-result h3{font-size:28px;letter-spacing:-.04em;line-height:1;color:#151515}
+    .finder-result p{color:#5f6673;margin-top:8px;font-size:14px;max-width:720px}
+    .finder-result .btn.accent{background:var(--accent);color:#fff}
+    .finder-result .btn.accent:hover{background:#c92f2b}
+
+    /* Support strip */
+    .support-strip{padding:0 0 110px;background:#fff}
+    .support-card{background:#101010;color:#fff;border-radius:42px;padding:46px;display:grid;grid-template-columns:1fr 1.35fr;gap:44px;align-items:center;overflow:hidden;position:relative}
+    .support-card:before{content:"";position:absolute;right:-130px;top:-150px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%)}
+    .support-card h2{font-size:46px;line-height:.96;letter-spacing:-.05em;position:relative;z-index:2}
+    .support-card p{color:#cfcfcf;margin-top:16px;position:relative;z-index:2;max-width:500px}
+    .support-links{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative;z-index:2}
+    .support-link{background:rgba(255,255,255,.09);border-radius:24px;padding:22px;min-height:142px;display:flex;flex-direction:column;justify-content:space-between;transition:.25s ease}
+    .support-link:hover{background:#fff;color:#111;transform:translateY(-4px)}
+    .support-link span{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:#aaa}
+    .support-link:hover span{color:#777}
+    .support-link b{font-size:18px;line-height:1.1;letter-spacing:-.03em}
+
+    /* Footer: aligned with confirmed homepage style */
+    .site-footer{background:#050505;color:#fff;padding:74px 0 24px;width:100%}
+    .footer-grid{display:grid;grid-template-columns:1.7fr repeat(4,1fr);gap:44px;margin-bottom:58px}
+    .footer-brand h3{font-size:18px;letter-spacing:.16em;text-transform:uppercase}
+    .footer-brand p{color:#999;max-width:340px;margin-top:16px;font-size:14px}
+    .footer-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:#777;margin-bottom:16px}
+    .footer-col a{display:block;color:#d5d5d5;font-size:14px;margin:9px 0;transition:.2s ease}
+    .footer-col a:hover{color:#fff;transform:translateX(4px)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:22px;display:flex;justify-content:space-between;gap:20px;color:#777;font-size:13px}
+    .float-inquiry{position:fixed;right:20px;bottom:20px;z-index:90;background:#fff;color:#111;border-radius:999px;box-shadow:0 14px 44px rgba(0,0,0,.24);height:42px;padding:0 16px;display:inline-flex;align-items:center;font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:900}
+
+    /* Inline SVG hub style */
+    .hub-stroke{fill:none;stroke:#191919;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+    .hub-fill{fill:#141414}
+    .hub-soft{fill:#e9e9e6}
+    .hub-accent{fill:#e53935}
+    .on-dark .hub-stroke{stroke:#fff}.on-dark .hub-fill{fill:#fff}.on-dark .hub-soft{fill:#313131}.on-dark .hub-accent{fill:#e53935}
+
+    .reveal{opacity:0;transform:translateY(34px);transition:.75s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+
+    @media (max-width:1500px){
+      .category-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .spec-layout{grid-template-columns:.82fr 1.18fr}
+    }
+
+    @media (max-width:1100px){
+      .nav{display:none}
+      .menu-toggle{display:block}
+      .nav-wrap{height:70px}
+      .mobile-open .nav{display:flex;position:absolute;top:70px;left:0;right:0;background:#080808;flex-direction:column;height:auto;align-items:stretch;padding:10px 24px 26px}
+      .mobile-open .nav-item{height:auto;display:block}
+      .mobile-open .nav-link{height:48px;padding:0;color:#fff}
+      .mobile-open .mega-panel{display:none}
+      .hubs-hero .container{grid-template-columns:1fr;padding-top:64px}
+      .hero-product{max-width:560px;transform:none}
+      .category-grid{grid-template-columns:repeat(2,1fr)}
+      .platform-grid,.platform-card,.platform-card.wide,.spec-layout,.rider-head,.rider-grid,.support-card{grid-template-columns:1fr}
+      .spec-panel{position:relative;top:0}
+      .finder-grid{grid-template-columns:repeat(2,1fr)}
+      .support-links{grid-template-columns:repeat(2,1fr)}
+      .footer-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width:760px){
+      :root{--page-pad:15px}
+      .container,.rail-inner{width:100%}
+      .rail-inner{justify-content:flex-start}
+      .nav-wrap{width:100%;padding-left:15px;padding-right:15px}
+      .brand{min-width:auto}.brand-logo{height:34px;max-width:150px}.brand span{display:none}
+      .nav-actions .btn{display:none}
+      .hubs-hero{min-height:640px}.hero-bg-main{object-fit:cover;object-position:58% center}.hero-bg-blur{object-position:58% center}
+      .hubs-hero .container{padding:54px var(--page-pad) 126px;gap:28px}
+      .hero-copy h1{font-size:58px;letter-spacing:-.065em}
+      .hero-copy p{font-size:16px}
+      .hero-stats,.category-grid,.finder-grid,.footer-grid{grid-template-columns:1fr}
+      .category-card.featured{grid-column:auto}
+      .overview-head,.finder-head,.finder-result,.footer-bottom{display:block}
+      .section-title{font-size:39px}
+      .platform-card{display:block}
+      .platform-content{padding:30px}
+      .platform-content h3,.spec-panel h2,.support-card h2{font-size:36px}
+      .spec-row{grid-template-columns:1fr}
+      .spec-cell.head:not(:first-child){display:none}
+      .rider-photo{min-height:420px}
+      .rider-caption{display:block;left:24px;right:24px;bottom:24px}
+      .rider-caption h3{font-size:34px}
+      .finder-head h2{font-size:38px}
+      .support-links{grid-template-columns:1fr}
+      .support-card,.finder-box{padding:28px;border-radius:30px}
+      .float-inquiry{right:14px;bottom:14px}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" aria-label="ARC Bike Hub Home">
+        <img class="brand-logo" src="https://arc.mrsxiao.com/wp-content/uploads/2026/05/logo.png" alt="ARC Bike Hub" />
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <div class="nav-item"><a class="nav-link" href="index.html">Home</a></div>
+
+        <div class="nav-item">
+          <a class="nav-link active" href="hubs.html">Hubs</a>
+          <div class="mega-panel">
+            <div class="mega-inner">
+              <div class="mega-intro">
+                <div class="kicker">ARC Hub Systems</div>
+                <h3>Find the right hub for your wheel project.</h3>
+                <p>Browse hub platforms by riding category, axle standard, freehub body and project requirement.</p>
+                <a class="btn light small" href="#find-your-hub">Find Your Hub</a>
+              </div>
+              <div class="mega-columns">
+                <div class="mega-col">
+                  <h4>Hub Categories</h4>
+                  <a href="#disc-hubs">Disc Hubs</a>
+                  <a href="#road-hubs">Road Hubs</a>
+                  <a href="#folding-bike-hubs">Folding Bike Hubs</a>
+                  <a href="#fixed-gear-hubs">Fixed Gear Hubs</a>
+                </div>
+                <div class="mega-col">
+                  <h4>Specialized Hubs</h4>
+                  <a href="#bmx-hubs">BMX Hubs</a>
+                  <a href="#internal-geared-hub">Internal Geared Hub</a>
+                  <a href="#partner-hubs">Partner Hubs</a>
+                  <a href="#others">Others</a>
+                </div>
+                <div class="mega-col">
+                  <h4>Parts & Standards</h4>
+                  <a href="#qr">QR</a>
+                  <a href="#freehub-body">Freehub Body</a>
+                  <a href="#standards">Axle Standards</a>
+                  <a href="#find-your-hub">Find Your Hub</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a class="nav-link" href="wheels.html">Wheels</a>
+          <div class="mega-panel">
+            <div class="mega-inner">
+              <div class="mega-intro">
+                <div class="kicker">Wheel Applications</div>
+                <h3>Select by terrain and riding style.</h3>
+                <p>Guide visitors from use scenario to the right wheel and hub configuration.</p>
+                <a class="btn light small" href="wheels.html#find-your-wheel">Find Your Wheel</a>
+              </div>
+              <div class="mega-columns">
+                <div class="mega-col"><h4>Mountain</h4><a href="#">All Mountain</a><a href="#">Cross Country</a><a href="#">Enduro</a><a href="#">Dirt Jump</a></div>
+                <div class="mega-col"><h4>Gravity</h4><a href="#">Downhill</a><a href="#">Trail</a><a href="#">E-MTB</a><a href="#">Freeride</a></div>
+                <div class="mega-col"><h4>Road & Mixed</h4><a href="#">Gravel</a><a href="#">Road</a><a href="#">All Road</a><a href="#">Wheel Finder</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a class="nav-link" href="support.html">Support</a>
+          <div class="mega-panel">
+            <div class="mega-inner">
+              <div class="mega-intro"><div class="kicker">Support Center</div><h3>Service information before and after the build.</h3><p>Collect technical documents, service videos, warranty information and contact channels in one place.</p><a class="btn light small" href="contact.html">Contact Us</a></div>
+              <div class="mega-columns">
+                <div class="mega-col"><h4>Self-service</h4><a href="#">Manuals</a><a href="#">Service Videos</a><a href="#">FAQ</a><a href="#">Compatibility Guide</a></div>
+                <div class="mega-col"><h4>After-sales</h4><a href="#">Warranty</a><a href="#">Spare Parts</a><a href="#">Hub Manuals</a><a href="#">Maintenance</a></div>
+                <div class="mega-col"><h4>Contact</h4><a href="#">Contact Us</a><a href="#">Project Inquiry</a><a href="#">Dealer Support</a><a href="#">Distributor Support</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a class="nav-link" href="explore.html">Explore</a>
+          <div class="mega-panel">
+            <div class="mega-inner">
+              <div class="mega-intro"><div class="kicker">Explore ARC</div><h3>Brand, product finder and partnership path.</h3><p>Use this section to connect brand story, product selection and cooperation opportunities.</p><a class="btn light small" href="contact.html">Become a Dealer or Distributor</a></div>
+              <div class="mega-columns">
+                <div class="mega-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Riding Scenes</a><a href="#">Technology</a><a href="#">Support</a></div>
+                <div class="mega-col"><h4>Finders</h4><a href="#find-your-hub">Find Your Hub</a><a href="#">Find Your Wheel</a><a href="#">Hub Systems</a><a href="#">Wheel Applications</a></div>
+                <div class="mega-col"><h4>Business</h4><a href="#">Become a Dealer or Distributor</a><a href="#">Partner Project</a><a href="#">Distributor Inquiry</a><a href="#">Custom Specification</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn ghost small" href="contact.html">Start Project</a>
+        <button class="menu-toggle" type="button" aria-label="Open mobile menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hubs-hero" id="hubs">
+      <img class="hero-bg-img hero-bg-blur" src="assets/images/arc-hubs-tech-hero-wide.png" alt="" aria-hidden="true" />
+      <img class="hero-bg-img hero-bg-main" src="assets/images/arc-hubs-tech-hero-wide.png" alt="ARC panoramic exploded bicycle hub technical hero image" />
+      <div class="container">
+        <div class="hero-copy reveal visible">
+          <div class="eyebrow">ARC Hub Systems</div>
+          <h1>Precision Hub Systems.</h1>
+          <p>Explore ARC hub platforms by riding style, brake interface, axle standard and freehub body. The page highlights technical structure first, then guides riders, dealers and wheel builders into the right product path.</p>
+          <div class="hero-actions">
+            <a class="btn accent" href="#find-your-hub">Find Your Hub</a>
+            <a class="btn ghost" href="#hub-categories">View Categories</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><b>11</b><span>Hub Entrances</span></div>
+            <div class="hero-stat"><b>4</b><span>Selection Paths</span></div>
+            <div class="hero-stat"><b>1</b><span>Partner Inquiry</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="hubs-rail" aria-label="Hubs page sub navigation">
+      <div class="rail-inner">
+        <a href="#disc-hubs">Disc Hubs</a>
+        <a href="#road-hubs">Road Hubs</a>
+        <a href="#folding-bike-hubs">Folding Bike Hubs</a>
+        <a href="#fixed-gear-hubs">Fixed Gear Hubs</a>
+        <a href="#bmx-hubs">BMX Hubs</a>
+        <a href="#internal-geared-hub">Internal Geared Hub</a>
+        <a href="#partner-hubs">Partner Hubs</a>
+        <a href="#qr">QR</a>
+        <a href="#freehub-body">Freehub Body</a>
+        <a href="#others">Others</a>
+        <a href="#find-your-hub">Find Your Hub</a>
+      </div>
+    </nav>
+
+    <section class="category-overview" id="hub-categories">
+      <div class="container">
+        <div class="overview-head reveal">
+          <div>
+            <div class="eyebrow">Hub Categories</div>
+            <h2 class="section-title">Choose hubs by riding type and standard.</h2>
+          </div>
+          <p class="section-lead">The page keeps the main Hubs categories visible first, then guides users toward standards and inquiry.</p>
+        </div>
+
+        <div class="category-grid">
+          <article class="category-card featured reveal" id="disc-hubs">
+            <div class="cat-top"><div class="cat-no">01 / Disc Hubs</div><h3>Disc Hubs</h3><p>For mountain, gravel and modern road wheel builds using disc brake interfaces.</p></div>
+            <div class="cat-visual on-dark">
+              <svg viewBox="0 0 320 190"><circle class="hub-soft" cx="160" cy="95" r="78"/><circle class="hub-fill" cx="160" cy="95" r="52"/><circle class="hub-accent" cx="160" cy="95" r="18"/><path class="hub-stroke" d="M35 95h250M70 58h180M70 132h180"/><g fill="#fff"><circle cx="82" cy="95" r="6"/><circle cx="238" cy="95" r="6"/><circle cx="160" cy="37" r="5"/><circle cx="160" cy="153" r="5"/></g></svg>
+            </div>
+            <div class="cat-tags"><span>6-Bolt</span><span>Centerlock</span><span>Boost</span></div>
+          </article>
+
+          <article class="category-card reveal" id="road-hubs"><div class="cat-top"><div class="cat-no">02 / Road Hubs</div><h3>Road Hubs</h3><p>Light, clean hub direction for road, endurance and fast all-road applications.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M52 95h216"/><ellipse class="hub-fill" cx="160" cy="95" rx="84" ry="48"/><circle class="hub-soft" cx="160" cy="95" r="30"/><circle class="hub-fill" cx="160" cy="95" r="10"/></svg></div><div class="cat-tags"><span>Road</span><span>Low Drag</span><span>Clean Shell</span></div></article>
+
+          <article class="category-card reveal" id="folding-bike-hubs"><div class="cat-top"><div class="cat-no">03 / Folding Bike Hubs</div><h3>Folding Bike Hubs</h3><p>Compact hub direction for folding bikes and urban wheel projects.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M70 95h180"/><rect class="hub-fill" x="98" y="60" width="124" height="70" rx="34"/><circle class="hub-soft" cx="160" cy="95" r="24"/><circle class="hub-fill" cx="160" cy="95" r="8"/></svg></div><div class="cat-tags"><span>Urban</span><span>Compact</span><span>Small Wheel</span></div></article>
+
+          <article class="category-card reveal" id="fixed-gear-hubs"><div class="cat-top"><div class="cat-no">04 / Fixed Gear Hubs</div><h3>Fixed Gear Hubs</h3><p>Simple and direct hub entry for track-style or fixed gear wheel builds.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M64 95h192"/><polygon class="hub-fill" points="105,62 215,62 240,95 215,128 105,128 80,95"/><circle class="hub-soft" cx="160" cy="95" r="28"/><circle class="hub-fill" cx="160" cy="95" r="9"/></svg></div><div class="cat-tags"><span>Fixed</span><span>Track</span><span>Single Speed</span></div></article>
+
+          <article class="category-card reveal" id="bmx-hubs"><div class="cat-top"><div class="cat-no">05 / BMX Hubs</div><h3>BMX Hubs</h3><p>Durable hub direction for BMX and high-impact riding scenarios.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M40 95h240"/><rect class="hub-fill" x="82" y="53" width="156" height="84" rx="22"/><circle class="hub-soft" cx="160" cy="95" r="36"/><circle class="hub-fill" cx="160" cy="95" r="12"/></svg></div><div class="cat-tags"><span>BMX</span><span>Strong</span><span>Serviceable</span></div></article>
+
+          <article class="category-card reveal" id="internal-geared-hub"><div class="cat-top"><div class="cat-no">06 / Internal Geared Hub</div><h3>Internal Geared Hub</h3><p>Category entrance for integrated gearing requirements and special builds.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M55 95h210"/><circle class="hub-fill" cx="160" cy="95" r="62"/><circle class="hub-soft" cx="160" cy="95" r="42"/><path d="M160 58l10 24 25 3-19 17 6 25-22-13-22 13 6-25-19-17 25-3z" fill="#151515"/></svg></div><div class="cat-tags"><span>Urban</span><span>Gear Hub</span><span>Special</span></div></article>
+
+          <article class="category-card reveal" id="partner-hubs"><div class="cat-top"><div class="cat-no">07 / Partner Hubs</div><h3>Partner Hubs</h3><p>For dealer, distributor and wheel-brand projects requiring defined specifications.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M48 95h224"/><path class="hub-fill" d="M96 58h128l32 37-32 37H96L64 95z"/><circle class="hub-accent" cx="160" cy="95" r="30"/><circle class="hub-fill" cx="160" cy="95" r="10"/></svg></div><div class="cat-tags"><span>Partner</span><span>Dealer</span><span>Distributor</span></div></article>
+
+          <article class="category-card reveal" id="qr"><div class="cat-top"><div class="cat-no">08 / QR</div><h3>QR</h3><p>Quick-release related entry for legacy and compatible hub standards.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M56 95h180"/><circle class="hub-fill" cx="146" cy="95" r="48"/><path class="hub-stroke" d="M225 95l38-36M225 95l44 28"/><circle class="hub-soft" cx="146" cy="95" r="24"/></svg></div><div class="cat-tags"><span>QR</span><span>End Cap</span><span>Standard</span></div></article>
+
+          <article class="category-card reveal" id="freehub-body"><div class="cat-top"><div class="cat-no">09 / Freehub Body</div><h3>Freehub Body</h3><p>Compatibility entrance for drivetrain standards and replacement parts.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M54 95h104"/><rect class="hub-fill" x="126" y="58" width="82" height="74" rx="16"/><path d="M208 65h52v60h-52z" fill="#333"/><g fill="#e53935"><rect x="218" y="75" width="8" height="40" rx="3"/><rect x="235" y="75" width="8" height="40" rx="3"/><rect x="252" y="75" width="8" height="40" rx="3"/></g></svg></div><div class="cat-tags"><span>HG</span><span>XD</span><span>Microspline</span></div></article>
+
+          <article class="category-card reveal" id="others"><div class="cat-top"><div class="cat-no">10 / Others</div><h3>Others</h3><p>Reserved entrance for axle, end cap, bearing and special hub accessories.</p></div><div class="cat-visual"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M62 95h196"/><circle class="hub-fill" cx="118" cy="95" r="34"/><circle class="hub-soft" cx="118" cy="95" r="16"/><circle class="hub-fill" cx="202" cy="95" r="44"/><circle class="hub-soft" cx="202" cy="95" r="21"/></svg></div><div class="cat-tags"><span>Parts</span><span>Bearing</span><span>End Cap</span></div></article>
+
+          <article class="category-card featured reveal" id="find-your-hub-card"><div class="cat-top"><div class="cat-no">11 / Find Your Hub</div><h3>Find Your Hub</h3><p>A guided selection area helps visitors confirm riding type, brake interface, axle and drivetrain compatibility before sending an inquiry.</p></div><div class="cat-visual on-dark"><svg viewBox="0 0 320 190"><path class="hub-stroke" d="M60 95h200"/><circle class="hub-soft" cx="160" cy="95" r="68"/><circle class="hub-fill" cx="160" cy="95" r="42"/><circle class="hub-accent" cx="160" cy="95" r="16"/><path d="M238 45l28 28-88 88-42 14 14-42z" fill="#e53935"/></svg></div><div class="cat-tags"><span>Guide</span><span>Inquiry</span><span>Selection</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="spec-section" id="standards">
+      <div class="container spec-layout">
+        <div class="spec-panel reveal">
+          <div class="eyebrow">Selection Standards</div>
+          <h2>Make technical choices easier.</h2>
+          <p>Before visitors ask for a hub, guide them through riding category, brake interface, axle standard and freehub body. This reduces unclear inquiries and keeps communication more professional.</p>
+        </div>
+        <div class="spec-table reveal" aria-label="Hub selection table">
+          <div class="spec-row"><div class="spec-cell head">Category</div><div class="spec-cell head">Main Use</div><div class="spec-cell head">Brake / Axle</div><div class="spec-cell head">Inquiry Focus</div></div>
+          <div class="spec-row"><div class="spec-cell name">Disc Hubs</div><div class="spec-cell">MTB, gravel, modern road</div><div class="spec-cell">6-bolt / centerlock, thru axle or QR</div><div class="spec-cell">Brake interface, O.L.D., spoke hole count</div></div>
+          <div class="spec-row"><div class="spec-cell name">Road Hubs</div><div class="spec-cell">Road, endurance, all-road</div><div class="spec-cell">Rim or disc direction based on product line</div><div class="spec-cell">Weight direction, freehub body, bearing layout</div></div>
+          <div class="spec-row"><div class="spec-cell name">Folding / Fixed / BMX</div><div class="spec-cell">Urban, track-style, BMX riding</div><div class="spec-cell">Category-specific axle and spacing</div><div class="spec-cell">Wheel size, axle type, durability requirement</div></div>
+          <div class="spec-row"><div class="spec-cell name">Internal Geared Hub</div><div class="spec-cell">Urban and special integrated setups</div><div class="spec-cell">Frame spacing and gear interface</div><div class="spec-cell">Compatibility and project requirement</div></div>
+          <div class="spec-row"><div class="spec-cell name">QR / Freehub Body</div><div class="spec-cell">Replacement, conversion and compatibility</div><div class="spec-cell">QR, end cap, drivetrain standard</div><div class="spec-cell">Current hub model and target drivetrain</div></div>
+          <p class="spec-note">Note: the table is written as a page framework. Replace standards and options with confirmed ARC product data before final launch.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rider-section" id="riding-scenes">
+      <div class="container">
+        <div class="rider-head reveal">
+          <div><div class="eyebrow">Riding Scenes</div><h2 class="section-title">Add people, but keep hubs as the focus.</h2></div>
+          <p class="section-lead">European and North American style riding scenes help the page feel international, while product cards remain clean and hub-focused.</p>
+        </div>
+        <div class="rider-grid">
+          <article class="rider-photo reveal"><div class="rider-caption"><h3>From rider feedback to hub selection.</h3><p>Use real riding contexts to guide users into disc, road, gravel and partner hub categories.</p></div></article>
+          <div class="rider-side">
+            <article class="rider-mini reveal"><h4>Mountain / Gravel</h4><p>Outdoor scene image for performance and durability positioning.</p></article>
+            <article class="rider-mini reveal"><h4>Road / Urban</h4><p>Cleaner lifestyle image for road, folding and fixed gear categories.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="finder" id="find-your-hub">
+      <div class="container">
+        <div class="finder-box reveal">
+          <div class="finder-head">
+            <div><div class="eyebrow">Find Your Hub</div><h2>Find the right hub faster.</h2></div>
+            <a class="btn" href="contact.html">Send Inquiry</a>
+          </div>
+          <div class="finder-grid">
+            <div class="finder-field"><label for="rideType">Riding Type</label><select id="rideType"><option>Trail / MTB</option><option>Road</option><option>Gravel</option><option>Folding Bike</option><option>Fixed Gear</option><option>BMX</option><option>Partner Project</option></select></div>
+            <div class="finder-field"><label for="brakeType">Brake Interface</label><select id="brakeType"><option>Disc Brake</option><option>Centerlock</option><option>6-Bolt</option><option>Rim Brake</option><option>Not Sure</option></select></div>
+            <div class="finder-field"><label for="axleType">Axle Standard</label><select id="axleType"><option>Thru Axle</option><option>QR</option><option>Boost</option><option>Superboost</option><option>Custom / Not Sure</option></select></div>
+            <div class="finder-field"><label for="driverType">Freehub Body</label><select id="driverType"><option>Shimano HG</option><option>SRAM XD</option><option>Micro Spline</option><option>Single Speed</option><option>Need Confirmation</option></select></div>
+          </div>
+          <div class="finder-result" id="finderResult">
+            <div><h3>Recommended path: Disc Hubs / Technical Confirmation</h3><p>Select riding type and standards above. The result area can later connect to WooCommerce filters, inquiry form fields or a product recommendation system.</p></div>
+            <a class="btn accent" href="contact.html">Start Project</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><h3>ARC Bike Hub</h3><p>Precision hub systems for MTB, road, gravel and partner wheel projects.</p></div>
+        <div class="footer-col"><h4>ARC</h4><a href="hubs.html">Hub Systems</a><a href="index.html#technology">Technology</a><a href="index.html#riding-scenes">Riding Scenes</a><a href="support.html">Support</a></div>
+        <div class="footer-col"><h4>Products</h4><a href="#disc-hubs">Disc Hubs</a><a href="#road-hubs">Road Hubs</a><a href="#folding-bike-hubs">Folding Hubs</a><a href="#freehub-body">Freehub Body</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="support.html#compatibility">Compatibility Guide</a><a href="support.html#manuals">Hub Manuals</a><a href="support.html#spare-parts">Spare Parts</a><a href="contact.html">Contact Us</a><a href="contact.html#project-inquiry">Project Inquiry</a></div>
+        <div class="footer-col"><h4>Partners</h4><a href="contact.html#partner">Become a Partner</a><a href="contact.html#dealer">Dealer Inquiry</a><a href="contact.html#distributor">Distributor Inquiry</a><a href="contact.html#custom-project">Custom Project</a><h4 style="margin-top:24px">Social Media</h4><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Facebook</a><a href="#">LinkedIn</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 ARC Bike Hub. All rights reserved.</span><span><a href="contact.html">Inquiry</a> · <a href="#top">Back to top</a></span></div>
+    </div>
+  </footer>
+
+  <a class="float-inquiry" href="contact.html">Inquiry</a>
+
+  <script>
+    const header = document.querySelector('.site-header');
+    const toggle = document.querySelector('.menu-toggle');
+    toggle.addEventListener('click', () => header.classList.toggle('mobile-open'));
+
+    const revealItems = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16 });
+    revealItems.forEach(item => revealObserver.observe(item));
+
+    const rideType = document.getElementById('rideType');
+    const brakeType = document.getElementById('brakeType');
+    const axleType = document.getElementById('axleType');
+    const driverType = document.getElementById('driverType');
+    const finderResult = document.getElementById('finderResult');
+
+    function updateFinder(){
+      const ride = rideType.value;
+      const brake = brakeType.value;
+      const axle = axleType.value;
+      const driver = driverType.value;
+      let path = 'Disc Hubs / Technical Confirmation';
+      if(ride.includes('Road')) path = 'Road Hubs / Freehub Body Confirmation';
+      if(ride.includes('Folding')) path = 'Folding Bike Hubs / Compact Standard Confirmation';
+      if(ride.includes('Fixed')) path = 'Fixed Gear Hubs / Single Speed Confirmation';
+      if(ride.includes('BMX')) path = 'BMX Hubs / Durability Direction';
+      if(ride.includes('Partner')) path = 'Partner Hubs / Project Specification Review';
+      finderResult.querySelector('h3').textContent = 'Recommended path: ' + path;
+      finderResult.querySelector('p').textContent = `Current selection: ${ride}, ${brake}, ${axle}, ${driver}. This information can be passed into the inquiry form or product filter later.`;
+    }
+    [rideType, brakeType, axleType, driverType].forEach(el => el.addEventListener('change', updateFinder));
+  </script>
+</body>
+</html>
